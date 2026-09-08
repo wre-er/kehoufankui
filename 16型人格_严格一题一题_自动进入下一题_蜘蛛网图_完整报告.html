@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>16型人格测试｜深度解析报告</title>
+<style>
+:root{--bg:#f5f6fa;--card:#fff;--ink:#202331;--muted:#707586;--a:#6257e8;--b:#8d5cf6;--line:#e7e8ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75}
+.wrap{max-width:1080px;margin:auto;padding:24px 18px 60px}
+.hero{padding:52px 34px;border-radius:26px;color:#fff;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 18px 45px #6257e82e}
+.hero h1{font-size:40px;margin:0 0 8px}.hero p{margin:5px 0;opacity:.93}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.badge{padding:5px 12px;border-radius:99px;background:#ffffff22}
+.card,.report{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:20px;box-shadow:0 8px 25px #2023310b}
+h2{margin-top:0;font-size:25px}h3{font-size:17px;margin-top:0}.note{background:#f1f0ff;border-left:4px solid var(--a);padding:12px 15px;border-radius:10px}
+.q{padding:18px 0;border-bottom:1px solid var(--line)}.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.opts label{border:1px solid var(--line);padding:9px;border-radius:10px;background:#fafaff;cursor:pointer}
+button{background:var(--a);color:#fff;border:0;padding:12px 20px;border-radius:11px;font-weight:700;cursor:pointer}
+.progress{height:8px;background:#ececf3;border-radius:99px;margin:15px 0;overflow:hidden}#bar{height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b))}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.panel{padding:17px;background:#fafaff;border:1px solid var(--line);border-radius:14px}.report-head{display:flex;gap:18px;align-items:center;margin-bottom:18px}
+.code{font-size:38px;font-weight:900;color:var(--a);letter-spacing:2px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}.tabs button{padding:7px 12px;background:#eeefff;color:#4e4fc1}.tabs button.active{background:var(--a);color:white}
+#reports .report{display:none}#reports .report.active{display:block}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:30px}
+@media(max-width:700px){.hero{padding:35px 22px}.hero h1{font-size:30px}.opts,.grid{grid-template-columns:1fr 1fr}}
+@media print{.hero{box-shadow:none}.tabs,.actions{display:none}.report{display:block!important;page-break-inside:avoid}}
+
+/* 一题一题测试 + 结果蜘蛛网图 */
+.small{font-size:13px;color:var(--muted)}
+#singleQuiz{min-height:270px}
+.single-question{padding:28px 4px 10px;text-align:center}
+.single-number{font-size:14px;color:var(--muted);margin-bottom:8px}
+.single-question h3{font-size:24px;line-height:1.7;max-width:850px;margin:0 auto 26px}
+.single-options{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:850px;margin:auto}
+.single-option{border:2px solid var(--line);background:#fafaff;border-radius:14px;padding:15px 10px;cursor:pointer;transition:.18s}
+.single-option:hover{border-color:#a5a4ed;transform:translateY(-1px)}
+.single-option.selected{border-color:var(--a);background:#f0efff;box-shadow:0 5px 15px #6257e820}
+.single-option input{display:none}
+.single-option .letter{font-size:20px;font-weight:800;color:var(--a);display:block}
+.single-option .desc{font-size:13px;color:var(--muted)}
+.result-head{display:flex;gap:28px;align-items:center;background:linear-gradient(135deg,#f3f1ff,#fafaff);border-radius:16px;padding:22px;margin-bottom:20px}
+.result-code{font-size:56px;font-weight:900;color:var(--a);letter-spacing:3px}
+.result-title{font-size:20px;font-weight:700;margin-top:5px}
+.result-summary{flex:1;color:#4e5363}
+.radar-wrap{display:grid;grid-template-columns:minmax(280px,520px) 1fr;gap:28px;align-items:center}
+#radar{width:100%;height:auto;display:block}
+.score-side{display:grid;gap:12px}
+.score-row{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fafaff}
+.score-row strong{display:flex;justify-content:space-between}
+.score-bar{height:8px;background:#e9e9f1;border-radius:99px;overflow:hidden;margin-top:8px}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--a),var(--b));border-radius:99px}
+.result-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+@media(max-width:700px){
+ .single-options{grid-template-columns:1fr 1fr}
+ .single-question h3{font-size:20px}
+ .result-head{flex-direction:column;align-items:flex-start}
+ .radar-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body><div class="wrap">
+<section class="hero"><h1>16型人格测试</h1><p>48道测试题 · 自动记录 · 16型人格深度解析</p>
+<div class="badges"><span class="badge">情感</span><span class="badge">人际</span><span class="badge">职业</span><span class="badge">成长</span></div></section>
+
+<section class="card" id="testCard">
+<h2>开始测试</h2>
+<p>一题一题完成测试。选择一个答案后，系统会自动进入下一题；完成48题后自动生成蜘蛛网图和人格报告。</p>
+<div class="note">A=3分，B=2分，C=1分，D=0分。建议按平时真实状态作答。测试仅供自我探索与娱乐参考。</div>
+<div class="progress"><div id="bar"></div></div>
+<div id="stepText" class="small"></div>
+<div id="singleQuiz"></div>
+<div class="actions">
+  <button id="restartBtn" onclick="restartQuiz()" style="background:#eeeefb;color:#4e4fc1">重新开始</button>
+</div>
+</section>
+
+<section class="card" id="resultCard" style="display:none">
+<h2>你的测试结果</h2>
+<div class="result-head">
+  <div><div id="resultCode" class="result-code">----</div><div id="resultTitle" class="result-title"></div></div>
+  <div class="result-summary" id="resultSummary"></div>
+</div>
+<div class="radar-wrap">
+  <canvas id="radar" width="520" height="520"></canvas>
+  <div class="score-side" id="scoreSide"></div>
+</div>
+<div class="result-actions">
+  <button onclick="openFullReport()">查看完整人格报告</button>
+  <button onclick="restartQuiz()" style="background:#eeeefb;color:#4e4fc1">重新测试</button>
+  <button onclick="window.print()" style="background:#eeeefb;color:#4e4fc1">打印结果</button>
+</div>
+</section>
+
+<section class="card"><h2>16型人格深度解析</h2>
+<p style="color:#707586">点击下方类型，查看对应的完整人格报告。</p>
+<div class="tabs" id="tabs"></div><div id="reports">
+    <article class="report" id="INFP">
+      <div class="report-head"><span class="code">INFP</span><div><h2>理想主义者 · 内在价值 · 共情力 · 自我成长</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视内心世界、个人价值和真实感受，通常希望生活有意义、有真诚的关系，也容易拥有丰富想象力。真正重 要的不是符合别人期待，而是找到自己愿意长期坚持的方向。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>共情能力较强</li><li>想象力丰富</li><li>重视真诚</li><li>个人价值感明显</li><li>独立思考</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>容易想太多而行动较慢</li><li>容易理想化人和关系</li><li>容易反复自责</li><li>不喜欢直接冲突</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>你通常更重视少数深度关系，而不是扩大社交圈。理解别人是优势，但不代表必须承担别人的情绪。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>你可能重视精神连接和被理解的感觉。进入关系后容易认真投入，也要避免把想象中的伴侣与真实的人混为一 谈。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>可能喜欢内容创作、设计、教育、研究、文字等具有自主空间和价值感的工作。人格类型不能决定职业。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能反复思考、暂时逃避或减少交流。把事实与猜测分开，再把大问题拆成小行动。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>保留敏感，但增加行动力；保留理想，同时学会面对现实。 16型人格深度解析报告 · 第 6 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>允许自己不完美</li><li>不要过度解读别人</li><li>主动表达需求</li><li>把理想拆成具体行动</li><li>建立自己的边界</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你可能是一个重视内心世界和真实价值的人。你的优势在于敏感、共情、想象力和理想主义；成长重点是行动 、表达和边界。 16型人格深度解析报告 · 第 7 页</p></div></div>
+    </article>
+    <article class="report" id="ENFP">
+      <div class="report-head"><span class="code">ENFP</span><div><h2>探索者 · 热情 · 创意 · 可能性 · 自我成长</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>通常好奇心强、喜欢新鲜事物和不同可能性。你可能一天产生很多想法，真正的挑战不是没有想法，而是选择 一个方向并坚持。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>好奇心强</li><li>创意丰富</li><li>善于交流</li><li>热情有感染力</li><li>适应变化较快</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>可能开始很多但完成较少</li><li>容易被新鲜感吸引</li><li>可能高估短期执行能力</li><li>动力变化时执行力也波动</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>你容易认识不同类型的人，也喜欢有趣、有思想的人。关系不一定需要高强度维持，稳定的关系也可以允许距 离和变化。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>你可能重视感觉、交流和新鲜感。长期关系还需要稳定、责任和持续经营。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>可能喜欢内容、新媒体、营销、策划、公关、教育、活动和创意工作。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力大时可能注意力分散、不断开始新事情。先只完成当前最重要的一件。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>把可能性变成现实。 16型人格深度解析报告 · 第 8 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>学会做减法</li><li>训练完成能力</li><li>不要过度依赖动力</li><li>保留独处时间</li><li>接受平淡也是生活的一部分</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势是热情、创意、沟通和探索；真正决定长期成果的，是选择、专注、坚持和完成。 16型人格深度解析报告 · 第 9 页</p></div></div>
+    </article>
+    <article class="report" id="INFJ">
+      <div class="report-head"><span class="code">INFJ</span><div><h2>洞察者 · 理想 · 共情 · 深度 · 自我成长</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视内心世界和事情背后的意义，喜欢深度交流，也容易察觉别人细微的情绪变化。敏锐是一种优势，但要避 免把猜测当成事实。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>洞察力强</li><li>共情能力较强</li><li>拥有理想感</li><li>喜欢深度思考</li><li>关注长期影响</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>容易过度分析</li><li>对自己要求过高</li><li>容易承担过多责任</li><li>不容易及时表达不满</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>你认真看待朋友关系，重视真诚、信任和尊重。理解一个人不代表必须接受对方所有行为。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>你可能重视精神连接，希望伴侣真正理解自己。直接沟通通常比反复猜测更有效。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>可能喜欢教育、写作、研究、咨询、用户研究、策划等需要理解人的工作。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能反复分析、减少交流或怀疑自己。区分事实与想象，再处理能改变的部分。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>洞察别人之前，先理解自己。 16型人格深度解析报告 · 第 10 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>不要把猜测当成事实</li><li>学会直接表达</li><li>不要试图解决所有人的问题</li><li>降低完美要求</li><li>给自己独处和恢复时间</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势在于洞察、共情、理想和深度；成长方向是减少内耗、表达需求和建立边界。 16型人格深度解析报告 · 第 11 页</p></div></div>
+    </article>
+    <article class="report" id="ENFJ">
+      <div class="report-head"><span class="code">ENFJ</span><div><h2>引导者 · 热情 · 共情 · 影响力 · 自我成长</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视人与人的连接，容易关注群体气氛，也擅长鼓励别人。你可能愿意承担责任，希望自己的存在能给别人带 来积极影响。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>善于理解他人</li><li>表达热情</li><li>善于鼓励</li><li>重视团队氛围</li><li>责任感较强</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>太在意评价</li><li>容易承担过多责任</li><li>可能忽视自己的需求</li><li>对关系期待较高</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>你愿意主动维护关系，也容易让别人感到被关注。但大家都开心并不是你的全部责任。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>你可能主动、体贴、重视长期关系。要避免把自己的付出变成对方必须偿还的条件。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>可能喜欢教育、培训、管理、人力资源、市场、公关、咨询和团队管理。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力大时可能继续照顾别人直到自己疲惫。可以重新判断哪些事情真正属于自己的责任。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>帮助别人之前，先照顾好自己。 16型人格深度解析报告 · 第 12 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>学会拒绝</li><li>不要追求所有人的认可</li><li>说出自己的需求</li><li>给关系留空间</li><li>不要用帮助别人证明自己的价值</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势是热情、共情、沟通和责任感；成长课题是边界、拒绝、自我关注和降低对外界认可的依赖。 16型人格深度解析报告 · 第 13 页</p></div></div>
+    </article>
+    <article class="report" id="INTP">
+      <div class="report-head"><span class="code">INTP</span><div><h2>思考者 · 好奇 · 独立 · 逻辑 · 探索</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>喜欢研究问题、寻找规律，并享受独立想明白一件事的过程。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>逻</li><li>辑</li><li>分</li><li>析</li><li>、</li><li>独</li><li>立</li><li>思</li><li>考</li><li>、</li><li>好</li><li>奇</li><li>心</li><li>、</li><li>深</li><li>入</li><li>学</li><li>习</li><li>、</li><li>创</li><li>新</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>想</li><li>太</li><li>久</li><li>才</li><li>行</li><li>16型人格深度解析报告 · 第 14 页</li><li>动</li><li>、</li><li>对</li><li>细</li><li>节</li><li>执</li><li>行</li><li>缺</li><li>乏</li><li>兴</li><li>趣</li><li>、</li><li>过</li><li>度</li><li>分</li><li>析</li><li>、</li><li>情</li><li>绪</li><li>表</li><li>达</li><li>较</li><li>少</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>更重视思想交流和个人空间。心里知道并不等于别人知道，适当表达很重要。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>希望伴侣理解自己的思考方式，同时给予一定空间。可以多表达在乎。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>科研、编程、数据、工程、产品、技术、写作、研究、策略分析等。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能过度思考、拖延、减少交流。把复杂问题拆成小任务。 16型人格深度解析报告 · 第 15 页</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>从想明白走向做出来。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>不要等待完美答案</li><li>设置截止时间</li><li>主动表达情绪</li><li>拆解目标</li><li>不要轻易放弃长期目标</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势是思考、分析和探索，真正需要训练的是行动、沟通和持续完成。 16型人格深度解析报告 · 第 16 页</p></div></div>
+    </article>
+    <article class="report" id="ENTP">
+      <div class="report-head"><span class="code">ENTP</span><div><h2>探索者 · 创新 · 辩证 · 灵活 · 可能性</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>喜欢新观点、讨论和头脑碰撞，容易在交流中产生新的想法，也善于发现新的可能性。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>创</li><li>意</li><li>、</li><li>灵</li><li>活</li><li>、</li><li>表</li><li>达</li><li>、</li><li>创</li><li>新</li><li>、</li><li>发</li><li>现</li><li>问</li><li>题</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>兴</li><li>趣</li><li>很</li><li>多</li><li>、</li><li>持</li><li>续</li><li>投</li><li>入</li><li>不</li><li>16型人格深度解析报告 · 第 17 页</li><li>足</li><li>、</li><li>容</li><li>易</li><li>被</li><li>新</li><li>鲜</li><li>事</li><li>吸</li><li>引</li><li>、</li><li>可</li><li>能</li><li>把</li><li>交</li><li>流</li><li>变</li><li>成</li><li>争</li><li>论</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>喜欢聪明、有趣、愿意交流的人。需要注意别人有时只是表达感受，而不是想辩论。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>喜欢有思想、能交流的伴侣。长期关系需要稳定、责任和持续经营。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>创业、营销、产品、咨询、媒体、策划、商业分析、销售、公关等。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能不断寻找新事情来逃避重复任务。限制同时推进的项目数量。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>把创意变成结果。 16型人格深度解析报告 · 第 18 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>一次只推进少数项目</li><li>设置截止日期</li><li>完成无聊阶段</li><li>辩论时注意感受</li><li>不要抓住所有机会</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你拥有发现可能性的能力，而长期成果来自把其中一部分坚持到底。 16型人格深度解析报告 · 第 19 页</p></div></div>
+    </article>
+    <article class="report" id="INTJ">
+      <div class="report-head"><span class="code">INTJ</span><div><h2>战略者 · 独立 · 规划 · 长期主义 · 成长</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视效率、逻辑和长期目标，习惯观察、分析后制定计划，也希望自己决定前进方向。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>战</li><li>略</li><li>思</li><li>维</li><li>、</li><li>独</li><li>立</li><li>判</li><li>断</li><li>、</li><li>长</li><li>期</li><li>规</li><li>划</li><li>、</li><li>学</li><li>习</li><li>能</li><li>力</li><li>、</li><li>解</li><li>决</li><li>复</li><li>杂</li><li>问</li><li>题</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>16型人格深度解析报告 · 第 20 页</li><li>效</li><li>率</li><li>要</li><li>求</li><li>过</li><li>高</li><li>、</li><li>对</li><li>低</li><li>效</li><li>率</li><li>沟</li><li>通</li><li>缺</li><li>乏</li><li>耐</li><li>心</li><li>、</li><li>过</li><li>度</li><li>依</li><li>赖</li><li>判</li><li>断</li><li>、</li><li>情</li><li>绪</li><li>表</li><li>达</li><li>少</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>重视关系质量，希望别人可靠坦诚。需要记住人与人并不总按效率运行。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>重视信任、稳定、尊重和共同目标。可以多用语言表达在乎。 16型人格深度解析报告 · 第 21 页</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>技术、科研、战略、产品、管理、金融分析、工程、数据等。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能封闭自己并试图控制更多变量。适当接受不确定性。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>看得远，也要与真实的人和环境建立连接。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>不要只关注效率</li><li>学会表达情绪</li><li>给别人犯错空间</li><li>主动经营重要关系</li><li>计划也要允许调整</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势在于看得远、想得深；成长在于让计划与真实的人和环境建立连接。 16型人格深度解析报告 · 第 22 页</p></div></div>
+    </article>
+    <article class="report" id="ENTJ">
+      <div class="report-head"><span class="code">ENTJ</span><div><h2>领导者 · 目标 · 执行 · 决断 · 成长</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>关注目标和结果，面对问题会自然寻找关键点、制定计划并推动事情前进，也愿意承担责任。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>目</li><li>标</li><li>明</li><li>确</li><li>、</li><li>执</li><li>行</li><li>、</li><li>组</li><li>织</li><li>、</li><li>决</li><li>策</li><li>、</li><li>资</li><li>源</li><li>整</li><li>合</li><li>、</li><li>推</li><li>动</li><li>能</li><li>力</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>效</li><li>率</li><li>要</li><li>16型人格深度解析报告 · 第 23 页</li><li>求</li><li>过</li><li>高</li><li>、</li><li>表</li><li>达</li><li>直</li><li>接</li><li>、</li><li>对</li><li>行</li><li>动</li><li>慢</li><li>的</li><li>人</li><li>缺</li><li>乏</li><li>耐</li><li>心</li><li>、</li><li>可</li><li>能</li><li>忽</li><li>略</li><li>情</li><li>绪</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>喜欢直接可靠的人，但合作不只是效率，也需要让别人愿意参与。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>重视稳定、责任和共同目标。对方有时需要的不是方案，而是被倾听。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>管理、企业经营、项目、创业、商业、销售、战略、组织管理等。 16型人格深度解析报告 · 第 24 页</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能过度控制局面。把真正重要的变量分出来。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>从控制一切，到学会合作。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>学会倾听</li><li>不要只关注效率</li><li>给团队成长空间</li><li>注意表达方式</li><li>接受部分事情无法控制</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你擅长推动事情发生，成熟的领导力则是让别人也愿意跟着你一起向前。 16型人格深度解析报告 · 第 25 页</p></div></div>
+    </article>
+    <article class="report" id="ISFP">
+      <div class="report-head"><span class="code">ISFP</span><div><h2>体验者 · 温和 · 自由 · 审美 · 真诚</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视真实体验和当下感受，通常不喜欢过度理论化，更愿意亲自感受和尝试。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>感</li><li>受</li><li>力</li><li>、</li><li>审</li><li>美</li><li>、</li><li>观</li><li>察</li><li>、</li><li>适</li><li>应</li><li>、</li><li>温</li><li>和</li><li>、</li><li>真</li><li>诚</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>不</li><li>喜</li><li>欢</li><li>长</li><li>期</li><li>规</li><li>划</li><li>、</li><li>16型人格深度解析报告 · 第 26 页</li><li>想</li><li>法</li><li>留</li><li>在</li><li>心</li><li>里</li><li>、</li><li>回</li><li>避</li><li>冲</li><li>突</li><li>、</li><li>对</li><li>严</li><li>格</li><li>规</li><li>则</li><li>兴</li><li>趣</li><li>较</li><li>低</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>喜欢简单自然的人际关系，不喜欢被过度干涉。温和也要有边界。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>喜欢自然、舒服、真实的关系，更看重被尊重和理解。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>设计、摄影、艺术、美妆、内容、手工、服务、审美相关工作。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能选择独处和回避。独处可以恢复，但不能长期逃避问题。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>把感受转化为行动。 16型人格深度解析报告 · 第 27 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>表达真实需求</li><li>给重要目标做简单计划</li><li>不要长期忍耐</li><li>保留个人空间</li><li>培养长期技能</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的力量来自真实、感受力和审美，成长来自把这些优势变成稳定能力。 16型人格深度解析报告 · 第 28 页</p></div></div>
+    </article>
+    <article class="report" id="ESFP">
+      <div class="report-head"><span class="code">ESFP</span><div><h2>活力者 · 热情 · 体验 · 社交 · 真实</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>关注生活体验，喜欢热闹、有趣和真实互动，也更愿意通过实践了解世界。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>热</li><li>情</li><li>、</li><li>社</li><li>交</li><li>、</li><li>适</li><li>应</li><li>、</li><li>感</li><li>染</li><li>力</li><li>、</li><li>观</li><li>察</li><li>力</li><li>、</li><li>行</li><li>动</li><li>力</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>追</li><li>求</li><li>即</li><li>时</li><li>反</li><li>馈</li><li>16型人格深度解析报告 · 第 29 页</li><li>、</li><li>长</li><li>期</li><li>计</li><li>划</li><li>不</li><li>足</li><li>、</li><li>对</li><li>重</li><li>复</li><li>工</li><li>作</li><li>兴</li><li>趣</li><li>低</li><li>、</li><li>容</li><li>易</li><li>分</li><li>心</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>容易给别人带来轻松感，也善于活跃气氛。不要为了维持气氛忽视自己。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>重视陪伴、互动、浪漫和共同体验。稳定同样是长期关系的一部分。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>销售、市场、活动、内容、娱乐、公关、服务、美妆和社交型工作。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能通过娱乐或社交逃避问题。先完成最重要的一件现实任务。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>享受当下，也为未来负责。 16型人格深度解析报告 · 第 30 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>给长期目标设置小阶段</li><li>不要只追求即时反馈</li><li>培养持续完成能力</li><li>保持边界</li><li>学会独处</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势是让生活充满活力，成长则是让这份活力拥有长期方向。 16型人格深度解析报告 · 第 31 页</p></div></div>
+    </article>
+    <article class="report" id="ISFJ">
+      <div class="report-head"><span class="code">ISFJ</span><div><h2>守护者 · 可靠 · 细致 · 温暖 · 责任</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视稳定、责任和身边人的感受，常常愿意默默提供支持，也会认真完成自己的责任。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>可</li><li>靠</li><li>、</li><li>细</li><li>致</li><li>、</li><li>责</li><li>任</li><li>、</li><li>照</li><li>顾</li><li>别</li><li>人</li><li>、</li><li>重</li><li>承</li><li>诺</li><li>、</li><li>认</li><li>真</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>不</li><li>容</li><li>易</li><li>拒</li><li>绝</li><li>、</li><li>16型人格深度解析报告 · 第 32 页</li><li>过</li><li>度</li><li>承</li><li>担</li><li>、</li><li>不</li><li>愿</li><li>表</li><li>达</li><li>不</li><li>满</li><li>、</li><li>害</li><li>怕</li><li>冲</li><li>突</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>珍惜稳定关系，也愿意用行动维护关系。但关系不应只靠一个人付出。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>通过细节、照顾和责任表达感情，也要学会直接说出需要。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>行政、教育、服务、财务、运营、人事和需要细致流程的岗位。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能不断承担责任直到疲惫。定期检查哪些事情真正属于自己。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>照顾别人，也照顾自己。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>学会拒绝</li><li>不要过度自责</li><li>主动表达需求</li><li>16型人格深度解析报告 · 第 33 页</li><li>不承担不属于自己的责任</li><li>安排稳定休息</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的可靠是一种力量，但成熟也意味着不再用牺牲自己证明善良。 16型人格深度解析报告 · 第 34 页</p></div></div>
+    </article>
+    <article class="report" id="ESFJ">
+      <div class="report-head"><span class="code">ESFJ</span><div><h2>协调者 · 热情 · 责任 · 关系 · 关怀</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视人与人之间的关系，愿意主动帮助别人，也比较关注团队氛围，希望大家相处融洽。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>热</li><li>情</li><li>、</li><li>责</li><li>任</li><li>、</li><li>合</li><li>作</li><li>、</li><li>关</li><li>注</li><li>他</li><li>人</li><li>、</li><li>组</li><li>织</li><li>、</li><li>行</li><li>动</li><li>力</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>太</li><li>在</li><li>意</li><li>评</li><li>价</li><li>、</li><li>16型人格深度解析报告 · 第 35 页</li><li>容</li><li>易</li><li>迎</li><li>合</li><li>、</li><li>不</li><li>愿</li><li>拒</li><li>绝</li><li>、</li><li>对</li><li>关</li><li>系</li><li>变</li><li>化</li><li>敏</li><li>感</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>愿意主动维护关系，也擅长让人感到被关注。但所有人的满意都不是你的任务。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>重视陪伴和实际关心。不要因为自己付出很多，就默认对方必须同样回应。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>教育、人力资源、行政、客服、社群、销售、公关、组织协调等。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能过度关注评价。回到自己的标准和真实需求。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>建立自己的标准。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>不要追求所有人认可</li><li>学会说不</li><li>16型人格深度解析报告 · 第 36 页</li><li>关注真实需求</li><li>不要过度解读关系变化</li><li>保留自己的生活</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你擅长让人与人产生连接，但你自己也是关系中需要被照顾的人。 16型人格深度解析报告 · 第 37 页</p></div></div>
+    </article>
+    <article class="report" id="ISTP">
+      <div class="report-head"><span class="code">ISTP</span><div><h2>实践者 · 独立 · 冷静 · 灵活 · 解决问题</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>喜欢直接解决现实问题，通常更愿意先观察问题在哪里，再动手尝试。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>动</li><li>手</li><li>、</li><li>实</li><li>际</li><li>、</li><li>冷</li><li>静</li><li>、</li><li>适</li><li>应</li><li>、</li><li>独</li><li>立</li><li>、</li><li>解</li><li>决</li><li>问</li><li>题</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>不</li><li>喜</li><li>欢</li><li>长</li><li>期</li><li>规</li><li>划</li><li>16型人格深度解析报告 · 第 38 页</li><li>、</li><li>情</li><li>绪</li><li>表</li><li>达</li><li>少</li><li>、</li><li>不</li><li>喜</li><li>欢</li><li>被</li><li>约</li><li>束</li><li>、</li><li>低</li><li>估</li><li>沟</li><li>通</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>喜欢简单自然的关系，也重视独立空间。独立并不意味着不需要沟通。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>常用行动表达感情。对方有时也需要听到你的表达。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>工程、技术、维修、摄影、编程、机械和实操型工作。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能独自处理问题。适当独处有帮助，但不要长期封闭自己。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>行动之外，也要学会表达。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>主动沟通</li><li>16型人格深度解析报告 · 第 39 页</li><li>给长期目标定方向</li><li>不要排斥团队合作</li><li>学会表达情绪</li><li>保留独立空间</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你擅长在现实问题中寻找解决办法，成长是让行动力与沟通能力同时变强。 16型人格深度解析报告 · 第 40 页</p></div></div>
+    </article>
+    <article class="report" id="ESTP">
+      <div class="report-head"><span class="code">ESTP</span><div><h2>行动者 · 勇于尝试 · 灵活 · 现实 · 活力</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>喜欢直接体验，遇到机会愿意先试试看，相信实践能够提供答案，临场反应通常比较灵活。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>行</li><li>动</li><li>力</li><li>、</li><li>适</li><li>应</li><li>、</li><li>反</li><li>应</li><li>、</li><li>社</li><li>交</li><li>、</li><li>实</li><li>践</li><li>、</li><li>临</li><li>场</li><li>处</li><li>理</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>可</li><li>能</li><li>冲</li><li>动</li><li>、</li><li>低</li><li>16型人格深度解析报告 · 第 41 页</li><li>估</li><li>长</li><li>期</li><li>风</li><li>险</li><li>、</li><li>不</li><li>喜</li><li>欢</li><li>等</li><li>待</li><li>、</li><li>追</li><li>求</li><li>刺</li><li>激</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>比较直接真实，容易让互动轻松，但敏感场合需要注意表达方式。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>喜欢有活力、有互动的关系。新鲜感有吸引力，但稳定和责任同样重要。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>销售、市场、创业、运营、活动、公关、体育和实践型工作。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能不断行动来逃避问题。重大决定前留一点时间思考风险。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>行动之前，多留一步思考。</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>重大决定不要只看眼前</li><li>学会等待</li><li>培养长期规划</li><li>16型人格深度解析报告 · 第 42 页</li><li>注意沟通方式</li><li>建立风险意识</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的优势是敢于行动，而成熟意味着知道什么时候该冲、什么时候该停。 16型人格深度解析报告 · 第 43 页</p></div></div>
+    </article>
+    <article class="report" id="ISTJ">
+      <div class="report-head"><span class="code">ISTJ</span><div><h2>执行者 · 可靠 · 规则 · 责任 · 稳定</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>重视责任、秩序和实际结果。你可能不喜欢把事情复杂化，更愿意用经过验证的方法把事情稳定做好。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>可</li><li>靠</li><li>、</li><li>认</li><li>真</li><li>、</li><li>责</li><li>任</li><li>、</li><li>组</li><li>织</li><li>、</li><li>执</li><li>行</li><li>、</li><li>细</li><li>节</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>对</li><li>变</li><li>化</li><li>谨</li><li>慎</li><li>、</li><li>不</li><li>喜</li><li>欢</li><li>16型人格深度解析报告 · 第 44 页</li><li>临</li><li>时</li><li>安</li><li>排</li><li>、</li><li>对</li><li>不</li><li>守</li><li>规</li><li>则</li><li>缺</li><li>乏</li><li>耐</li><li>心</li><li>、</li><li>要</li><li>求</li><li>自</li><li>己</li><li>过</li><li>高</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>不是特别喜欢夸张表达，但通常说到做到。关系中也可以适当表达情绪。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>通过稳定、责任和行动表达感情。语言上的关心同样重要。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>财务、工程、行政、项目、数据、运营、质量管理等。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>计划被打乱时可能烦躁。提前区分必须完成和最好完成的事情。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>稳定中保留弹性。 16型人格深度解析报告 · 第 45 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>接受计划变化</li><li>不要要求所有事情完美</li><li>给别人不同工作方式的空间</li><li>学会表达感情</li><li>偶尔尝试新方法</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你的可靠让别人愿意信任你，而适当的弹性能够让你走得更远。 16型人格深度解析报告 · 第 46 页</p></div></div>
+    </article>
+    <article class="report" id="ESTJ">
+      <div class="report-head"><span class="code">ESTJ</span><div><h2>组织者 · 效率 · 责任 · 执行 · 现实</h2><p>16型人格深度解析</p></div></div>
+      <div class="grid"><div class='panel'><h3>01｜你是什么样的人？</h3><p>关注实际结果，遇到问题会迅速考虑如何解决。你愿意承担责任，也喜欢明确的规则、流程和目标。</p></div><div class='panel'><h3>02｜你的核心优势</h3><ul><li>组</li><li>织</li><li>、</li><li>执</li><li>行</li><li>、</li><li>责</li><li>任</li><li>、</li><li>决</li><li>策</li><li>、</li><li>实</li><li>际</li><li>思</li><li>维</li><li>、</li><li>管</li><li>理</li></ul></div><div class='panel'><h3>03｜你可能存在的性格盲点</h3><ul><li>表</li><li>达</li><li>直</li><li>接</li><li>、</li><li>对</li><li>低</li><li>16型人格深度解析报告 · 第 47 页</li><li>效</li><li>率</li><li>缺</li><li>乏</li><li>耐</li><li>心</li><li>、</li><li>不</li><li>容</li><li>易</li><li>理</li><li>解</li><li>犹</li><li>豫</li><li>、</li><li>过</li><li>于</li><li>强</li><li>调</li><li>规</li><li>则</li></ul></div><div class='panel'><h3>04｜你的人际关系模式</h3><p>看重诚信、责任和行动力，也需要接受别人存在不同节奏。</p></div><div class='panel'><h3>05｜你的恋爱模式 ❤️</h3><p>常通过解决问题和承担责任表达感情。别忘了语言上的关心。</p></div><div class='panel'><h3>06｜职业与工作倾向</h3><p>管理、运营、项目、财务、销售、行政、组织协调、商业经营等。</p></div><div class='panel'><h3>07｜当你压力很大时</h3><p>压力下可能更加控制局面。把注意力放在真正重要的结果上。</p></div><div class='panel'><h3>08｜你的成长关键词</h3><p>从管理事情走向理解人。 16型人格深度解析报告 · 第 48 页</p></div><div class='panel'><h3>09｜给你的5条建议</h3><ul><li>学会倾听</li><li>不要只关注结果</li><li>给别人犯错和成长空间</li><li>注意表达方式</li><li>接受部分事情无法完全控制</li></ul></div><div class='panel'><h3>10｜你的最终总结</h3><p>你拥有很强的执行和组织能力，而真正高级的能力，是让效率与人的感受同时被看见。</p></div></div>
+    </article></div></section>
+<footer>16型人格测试与深度解析｜仅供自我探索与娱乐参考</footer>
+</div>
+<script>
+const QUESTIONS=["和一群刚认识的人待在一起时，我通常能比较快地融入。","一个人独处一段时间，会让我感觉很舒服。","遇到开心的事情，我通常第一时间想找人分享。","长时间参加社交活动后，我通常需要独处恢复精力。","我比较喜欢主动认识新朋友。","与其参加热闹的聚会，我更喜欢和一两个熟悉的人深入聊天。","当我有一个新想法时，我经常会先说出来，再慢慢整理。","我通常需要先在脑海中想清楚，才愿意表达自己的观点。","周末如果没有安排，我很容易主动约朋友出去。","即使很久不与别人联系，我也不会特别焦虑。","我喜欢成为讨论中的积极参与者。","我更享受安静、不被打扰的环境。","我更关注一件事情具体应该怎样完成。","我经常会思考一件事情未来可能发展成什么样。","学习新知识时，我喜欢先看实际案例。","我喜欢从不同的信息中寻找隐藏的规律。","我通常比较相信自己亲眼看到或亲身经历的事情。","我经常会凭借一种“感觉”判断事情的发展方向。","别人给我解释事情时，我更喜欢具体、清楚的说明。","一个看似普通的事情，也很容易让我联想到其他可能性。","我处理问题时，通常先考虑现实条件。","我经常会思考“如果换一种方式，会不会出现完全不同的结果”。","我喜欢掌握已经验证过的方法。","我喜欢探索还没有明确答案的问题。","做重要决定时，我通常会优先分析利弊。","别人的情绪变化会明显影响我的判断。","即使不喜欢一个决定，只要它合理，我也能够接受。","我在做决定时，会特别考虑这个决定会不会伤害别人。","与朋友发生矛盾时，我会尽量先分析事情本身。","与朋友发生矛盾时，我通常更在意双方的感受。","我认为“讲道理”往往比“顾及情绪”更加重要。","我认为一段关系中，被理解和被尊重非常重要。","面对批评时，我通常先判断对方说得有没有道理。","面对批评时，我可能会先在意对方为什么这样评价我。","如果规则合理，我通常不会因为某个人的情况而轻易改变。","如果严格执行规则会让别人受到明显伤害，我可能会考虑变通。","出门旅行前，我喜欢提前规划路线和时间。","我更喜欢根据当天的状态临时决定做什么。","待办事项越早完成，我越有安全感。","临时出现新的计划时，我通常不会觉得麻烦。","我喜欢提前确定重要事情的安排。","我不太喜欢把未来安排得过于固定。","面对任务时，我倾向于先制定计划再行动。","面对任务时，我经常边做边调整。","我喜欢事情按照自己预期的节奏发展。","我认为计划赶不上变化，所以保持弹性更加重要。","临近截止日期才完成任务，会让我感到压力很大。","有时候最后期限临近，反而能够让我效率特别高。"];
+
+const TYPES=["INFP","ENFP","INFJ","ENFJ","INTP","ENTP","INTJ","ENTJ","ISFP","ESFP","ISFJ","ESFJ","ISTP","ESTP","ISTJ","ESTJ"];
+const answers=Array(48).fill(null);
+let current=0, moving=false, resultType="";
+
+function escapeHtml(x){return x.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function optionHtml(value,letter,desc){
+  return `<button type="button" class="single-option" data-value="${value}"><span class="letter">${letter}</span><span class="desc">${desc}</span></button>`;
+}
+
+function renderQuestion(){
+  const q=QUESTIONS[current];
+  document.getElementById("stepText").textContent=`第 ${current+1} / 48 题`;
+  document.getElementById("bar").style.width=((current+1)/48*100)+"%";
+  document.getElementById("singleQuiz").innerHTML=
+    `<div class="single-question">
+      <div class="single-number">问题 ${current+1}</div>
+      <h3>${escapeHtml(q)}</h3>
+      <div class="single-options">
+        ${optionHtml(3,"A","非常符合")}
+        ${optionHtml(2,"B","比较符合")}
+        ${optionHtml(1,"C","不太符合")}
+        ${optionHtml(0,"D","完全不符合")}
+      </div>
+    </div>`;
+
+  document.querySelectorAll(".single-option").forEach(btn=>{
+    btn.addEventListener("click",()=>selectAnswer(btn),{once:true});
+  });
+}
+
+function selectAnswer(btn){
+  if(moving) return;
+  moving=true;
+  answers[current]=Number(btn.dataset.value);
+
+  document.querySelectorAll(".single-option").forEach(x=>{
+    x.disabled=true;
+    x.classList.remove("selected");
+  });
+  btn.classList.add("selected");
+
+  // 严格按 1→2→3→……→48 顺序推进，不能跳题。
+  setTimeout(()=>{
+    if(current<47){
+      current++;
+      moving=false;
+      renderQuestion();
+      window.scrollTo({top:document.getElementById("testCard").offsetTop-10,behavior:"smooth"});
+    }else{
+      moving=false;
+      showResult();
+    }
+  },350);
+}
+
+function restartQuiz(){
+  answers.fill(null);
+  current=0;
+  moving=false;
+  resultType="";
+  document.getElementById("resultCard").style.display="none";
+  document.getElementById("testCard").style.display="block";
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function calculateScores(){
+  const s={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+  const groups=[
+    [[1,3,5,7,9,11],"E"],[[2,4,6,8,10,12],"I"],
+    [[13,15,17,19,21,23],"S"],[[14,16,18,20,22,24],"N"],
+    [[25,27,29,31,33,35],"T"],[[26,28,30,32,34,36],"F"],
+    [[37,39,41,43,45,47],"J"],[[38,40,42,44,46,48],"P"]
+  ];
+  groups.forEach(([nums,side])=>nums.forEach(n=>s[side]+=answers[n-1]));
+  return s;
+}
+
+function showResult(){
+  const s=calculateScores();
+  resultType=(s.E>=s.I?"E":"I")+(s.S>=s.N?"S":"N")+(s.T>=s.F?"T":"F")+(s.J>=s.P?"J":"P");
+
+  const report=document.getElementById(resultType);
+  const title=report?.querySelector(".report-head h2")?.textContent||resultType;
+  const intro=report?.querySelector(".panel p")?.textContent||"测试结果已生成。";
+
+  document.getElementById("resultCode").textContent=resultType;
+  document.getElementById("resultTitle").textContent=title;
+  document.getElementById("resultSummary").textContent=intro;
+
+  const dims=[["E / I","E",s.E,s.I],["S / N","S",s.S,s.N],["T / F","T",s.T,s.F],["J / P","J",s.J,s.P]];
+  document.getElementById("scoreSide").innerHTML=dims.map(([name,sel,a,b])=>{
+    const total=a+b||1,p=Math.round(a/total*100),side=a>=b?sel:name.split(" / ")[1];
+    return `<div class="score-row"><strong><span>${name} · ${side}</span><span>${p}%</span></strong><div class="score-bar"><div class="score-fill" style="width:${p}%"></div></div></div>`;
+  }).join("");
+
+  drawRadar(s);
+  document.getElementById("testCard").style.display="none";
+  document.getElementById("resultCard").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function drawRadar(s){
+  const canvas=document.getElementById("radar");
+  if(!canvas)return;
+  const ctx=canvas.getContext("2d"),W=520,H=520,dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H/2,r=185;
+  const vals=[s.E/(s.E+s.I||1),s.S/(s.S+s.N||1),s.T/(s.T+s.F||1),s.J/(s.J+s.P||1)];
+  const labels=["E 外向","S 现实","T 逻辑","J 计划"];
+  ctx.strokeStyle="#dcdde7";ctx.lineWidth=1;
+  for(let level=.25;level<=1;level+=.25){
+    ctx.beginPath();
+    for(let i=0;i<4;i++){const a=-Math.PI/2+i*Math.PI/2,x=cx+Math.cos(a)*r*level,y=cy+Math.sin(a)*r*level;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+    ctx.closePath();ctx.stroke();
+  }
+  for(let i=0;i<4;i++){
+    const a=-Math.PI/2+i*Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.stroke();
+    ctx.fillStyle="#4e5363";ctx.font="600 14px Arial";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(labels[i],cx+Math.cos(a)*(r+34),cy+Math.sin(a)*(r+34));
+  }
+  const pts=[];ctx.beginPath();
+  vals.forEach((v,i)=>{const a=-Math.PI/2+i*Math.PI/2,x=cx+Math.cos(a)*r*v,y=cy+Math.sin(a)*r*v;pts.push([x,y]);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+  ctx.closePath();ctx.fillStyle="rgba(98,87,232,.16)";ctx.fill();ctx.strokeStyle="#6257e8";ctx.lineWidth=3;ctx.stroke();
+  pts.forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],5,0,Math.PI*2);ctx.fillStyle="#6257e8";ctx.fill();});
+}
+
+function openFullReport(){
+  const b=[...document.querySelectorAll("#tabs button")].find(x=>x.textContent===resultType);
+  if(b)b.click();
+  const el=document.getElementById(resultType);
+  if(el){document.querySelectorAll("#reports .report").forEach(x=>x.classList.remove("active"));el.classList.add("active");el.scrollIntoView({behavior:"smooth"});}
+}
+
+window.addEventListener("resize",()=>{if(resultType)drawRadar(calculateScores());});
+renderQuestion();
+
+const tabs=document.getElementById("tabs");
+TYPES.forEach((code,i)=>{
+  const b=document.createElement("button");b.textContent=code;b.onclick=()=>showType(code,b);tabs.appendChild(b);
+  if(i===0)showType(code,b);
+});
+function showType(code,b){
+  document.querySelectorAll("#tabs button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  document.querySelectorAll("#reports .report").forEach(x=>x.classList.remove("active"));
+  const el=document.getElementById(code);if(el)el.classList.add("active");
+}
+</script></body></html>
