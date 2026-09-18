@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课后反馈生成器</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f7fb;color:#202636;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif}.wrap{max-width:1180px;margin:auto;padding:24px 16px 50px}.hero{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:28px;border-radius:22px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:28px}.hero p{margin:0;opacity:.9}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:#fff;padding:22px;border-radius:18px;box-shadow:0 5px 18px #0000000d}.card h2{margin:0 0 18px;font-size:18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#475569}input,textarea,select{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit;outline:0}textarea{min-height:72px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:#6366f1;box-shadow:0 0 0 3px #6366f11a}.out{min-height:680px;background:#fafbff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;white-space:pre-wrap;line-height:1.85;font-size:15px}.btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer}.primary{background:#6366f1;color:#fff}.secondary{background:#eef2ff;color:#4338ca}.light{background:#f1f5f9;color:#475569}.tip{font-size:12px;color:#64748b;margin-top:9px}@media(max-width:850px){.grid,.fields{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body><div class="wrap">
+<div class="hero"><h1>📋 课后反馈生成器</h1><p>输入真实课堂信息，生成专业、温暖、具体、可直接微信发送的家校反馈。</p></div>
+<div class="grid">
+<section class="card"><h2>📝 填写课堂信息</h2><div class="fields">
+<div><label>👦 学生姓名</label><input id="name" placeholder="例如：小林"></div>
+<div><label>🎂 年级/年龄</label><input id="grade" placeholder="例如：高一"></div>
+<div><label>📚 课程/科目</label><input id="subject" placeholder="例如：数学"></div>
+<div><label>📅 日期</label><input id="date" type="date"></div>
+<div class="full"><label>🎯 本节课主题</label><input id="topic" placeholder="例如：函数单调性"></div>
+<div class="full"><label>🙋 课堂表现</label><textarea id="performance" placeholder="例如：整体专注，能够跟随老师完成课堂练习。"></textarea></div>
+<div class="full"><label>🧠 知识掌握</label><textarea id="knowledge" placeholder="例如：基础概念已经掌握，综合题还需要巩固。"></textarea></div>
+<div class="full"><label>👀 互动/专注/纪律</label><textarea id="interaction" placeholder="例如：主动回答问题2次，专注度较好，课堂纪律稳定。"></textarea></div>
+<div><label>✍️ 作业/练习</label><textarea id="practice" placeholder="例如：完成8题，错2题"></textarea></div>
+<div><label>🌟 亮点</label><textarea id="highlight" placeholder="例如：遇到不会的题会主动提问"></textarea></div>
+<div><label>🌱 待提升</label><textarea id="improve" placeholder="例如：做题时容易漏掉条件"></textarea></div>
+<div><label>📝 课后任务</label><textarea id="task" placeholder="例如：整理错题，完成10道同类型题"></textarea></div>
+<div><label>🏡 家长配合</label><textarea id="parent" placeholder="例如：提醒完成错题整理即可"></textarea></div>
+<div><label>💬 反馈风格</label><select id="style"><option value="warm">亲切鼓励</option><option value="professional">专业严谨</option><option value="brief">简洁高效</option></select></div>
+<div><label>🔢 字数要求</label><input id="words" placeholder="例如：300字"></div>
+<div><label>👩‍🏫 教师姓名</label><input id="teacher" placeholder="例如：李老师"></div>
+<div class="full"><label>✨ 特殊要求</label><textarea id="special" placeholder="例如：不要太官方，突出孩子的进步"></textarea></div>
+</div><div class="btns"><button class="primary" onclick="generate()">✨ 生成课后反馈</button><button class="light" onclick="clearForm()">清空</button></div><div class="tip">规则：先肯定再建议；不编造成绩、排名、心理活动或其他学生信息。</div></section>
+<section class="card"><h2>💌 反馈结果</h2><div id="out" class="out">请填写左侧课堂信息，然后点击“生成课后反馈”。</div><div class="btns"><button class="secondary" onclick="copyResult()">📋 一键复制</button><button class="light" onclick="downloadTxt()">📄 保存 TXT</button></div></section>
+</div></div>
+<script>
+const $=id=>document.getElementById(id),v=id=>$(id).value.trim();
+function dt(){let d=v("date");if(!d)return"待补充";let p=d.split("-");return p.length===3?`${p[0]}年${+p[1]}月${+p[2]}日`:d}
+function generate(){
+let name=v("name")||"待补充",grade=v("grade")||"待补充",subject=v("subject")||"待补充",topic=v("topic")||"待补充",performance=v("performance"),knowledge=v("knowledge"),interaction=v("interaction"),practice=v("practice"),highlight=v("highlight"),improve=v("improve"),task=v("task"),parent=v("parent"),teacher=v("teacher")||"教师",special=v("special"),style=$("style").value;
+let e=style==="professional"?["","","","","","","",""]:style==="brief"?["✨","📚","","🧠","💡","📝","🏡","🌻"]:["✨","📚","🙋","🧠","💡","📝","🏡","🌻"];
+let total=highlight?`本节课的亮点是${highlight}。`:performance?`本节课整体状态是${performance}。`:"本节课整体表现待补充。";total+=knowledge?` 在学习内容方面，${knowledge}`:" 知识掌握情况待补充。";
+let sug=style==="brief"?`1. 针对本节课易错点复习1次。\n2. 完成5—10道同类型题并及时订正。`:`1. 针对本节课的易错点，当天安排10—15分钟回顾，并把关键步骤重新写一遍。\n2. 对还不够熟练的题型，完成5—10道同类型练习，做完后及时核对并订正。\n3. 将本节课出现的错题整理下来，记录“错在哪里、正确方法是什么”，避免只抄答案。`;
+let out=`【课后反馈】✨
+学生：${name}
+课程：${subject} ｜ 日期：${dt()}
+
+${e[0]} 一、今日总评
+${total}
+
+${e[1]} 二、学习内容
+本节课围绕“${topic}”展开，重点进行相关知识讲解、理解与练习，具体内容以课堂实际完成情况为准。
+
+${e[2]} 三、课堂表现
+${performance||"课堂表现待补充。"}${interaction?"\n互动、专注及纪律方面："+interaction:""}
+
+${e[3]} 四、掌握情况
+${knowledge||"目前掌握情况待补充。"}${practice?"\n本节课练习情况："+practice+"。":""}
+
+${e[4]} 五、提升建议
+${sug}
+${improve?improve+" 建议后续通过针对性练习逐步强化。":"待提升内容待补充，建议结合本节课练习情况进一步确认。"}
+
+${e[5]} 六、课后任务
+${task||"课后任务待补充。"}
+
+${e[6]} 七、家长配合
+${parent||"家长可以简单关注课后任务是否完成即可，不需要额外增加学习压力；如果孩子遇到不会的内容，鼓励先标记下来，下一次及时反馈。"}
+
+${e[7]} 八、教师寄语
+今天的学习，重要的不只是完成了多少内容，更重要的是把课堂中发现的问题一个个解决。保持稳定的节奏，及时复习、及时订正、及时反馈，相信每一次认真完成的小任务，都会成为后续进步的基础。🌱
+
+——${teacher} 😊`;
+if(special)out+="\n\n【特殊要求已参考】\n"+special;
+$("out").textContent=out}
+function copyResult(){let t=$("out").textContent;if(t.startsWith("请填写"))return;navigator.clipboard.writeText(t).then(()=>alert("已复制，可以直接粘贴到微信。"))}
+function downloadTxt(){let t=$("out").textContent;if(t.startsWith("请填写"))return;let b=new Blob(["\ufeff"+t],{type:"text/plain;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="课后反馈.txt";a.click();URL.revokeObjectURL(u)}
+function clearForm(){document.querySelectorAll("input,textarea").forEach(x=>x.value="");$("style").value="warm";$("out").textContent="请填写左侧课堂信息，然后点击“生成课后反馈”。"}
+</script></body></html>
