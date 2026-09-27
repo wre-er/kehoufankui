@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="referrer" content="no-referrer" />
+<meta name="robots" content="noindex" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>副业方向定位器 · 40题找到你的方向</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1100px 520px at 50% -8%,#eef2ff 0%,#f6f8fc 48%,#f6f8fc 100%);
+    color:#0f172a;line-height:1.65;-webkit-font-smoothing:antialiased;
+    min-height:100vh;min-height:100dvh;overflow-x:hidden;
+  }
+  .app{
+    max-width:760px;margin:0 auto;
+    padding:22px 18px 70px;
+    padding-left:max(18px,env(safe-area-inset-left,0px));
+    padding-right:max(18px,env(safe-area-inset-right,0px));
+    padding-bottom:max(70px,calc(70px + env(safe-area-inset-bottom,0px)));
+  }
+  .brand{display:flex;align-items:center;gap:9px;margin-bottom:20px}
+  .brand i{width:26px;height:26px;border-radius:9px;display:block;flex:0 0 auto;
+    background:linear-gradient(135deg,#4f46e5,#06b6d4);
+    box-shadow:0 6px 14px -6px rgba(79,70,229,.9);}
+  .brand span{font-size:14px;font-weight:700;letter-spacing:.4px;color:#334155}
+  .screen{display:none}
+  .screen.active{display:block}
+
+  .hero{background:#fff;border:1px solid #e9edf5;border-radius:22px;padding:30px 26px 26px;
+    box-shadow:0 1px 2px rgba(15,23,42,.04),0 18px 40px -26px rgba(15,23,42,.28);}
+  .hero h1{font-size:clamp(21px,5.4vw,26px);line-height:1.35;letter-spacing:-.3px;margin-bottom:10px}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,#4f46e5,#06b6d4);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero .sub{color:#64748b;font-size:clamp(14px,3.6vw,15px);margin-bottom:22px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .tag{font-size:12.5px;color:#475569;background:#f1f5f9;border:1px solid #e6ebf3;padding:5px 11px;border-radius:99px;}
+  .privacy{background:#f8fafc;border:1px dashed #dfe6ef;border-radius:14px;
+    padding:14px 16px;font-size:13px;color:#64748b;line-height:1.8;}
+  .privacy b{color:#334155}
+  .btn{display:block;width:100%;border:0;cursor:pointer;font-family:inherit;
+    padding:15px 20px;border-radius:14px;font-size:16px;font-weight:700;letter-spacing:.3px;
+    color:#fff;background:linear-gradient(120deg,#4f46e5,#4338ca);
+    box-shadow:0 14px 26px -14px rgba(79,70,229,.95);
+    transition:transform .16s,box-shadow .16s,filter .16s;
+    min-height:52px;touch-action:manipulation;-webkit-appearance:none;appearance:none;}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+  .btn:active{transform:translateY(0)}
+  .btn.ghost{background:#fff;color:#4f46e5;border:1.5px solid #dcd9fb;box-shadow:none;}
+  .btn.ghost:hover{background:#f7f6ff}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .btn-row .btn{flex:1 1 160px;margin:0}
+  .mt24{margin-top:24px}
+
+  .qhead{position:sticky;position:-webkit-sticky;top:0;z-index:10;padding:10px 0 14px;
+    background:linear-gradient(180deg,#f6f8fc 70%,rgba(246,248,252,0));}
+  .qmeta{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:#64748b;margin-bottom:9px}
+  .qmeta b{color:#4f46e5;font-size:15px}
+  .bar{height:7px;background:#e8ecf4;border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#4f46e5,#06b6d4);transition:width .32s cubic-bezier(.4,0,.2,1)}
+  .qbox{background:#fff;border:1px solid #e9edf5;border-radius:20px;padding:24px 22px 22px;
+    box-shadow:0 1px 2px rgba(15,23,42,.04),0 18px 40px -30px rgba(15,23,42,.3);}
+  .qbox.anim{animation:fadeUp .28s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .qnum{font-size:12.5px;font-weight:800;color:#a5b4fc;letter-spacing:1.6px;margin-bottom:8px}
+  .qtext{font-size:clamp(16px,4.4vw,19px);font-weight:700;line-height:1.5;letter-spacing:-.2px}
+  .options{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;
+    padding:15px 16px;border:1.5px solid #e6ebf3;border-radius:14px;background:#fff;
+    font-size:clamp(14.5px,3.8vw,15.5px);line-height:1.55;color:#0f172a;
+    cursor:pointer;font-family:inherit;
+    transition:border-color .16s,background .16s,transform .16s,box-shadow .16s;
+    min-height:52px;touch-action:manipulation;-webkit-appearance:none;appearance:none;}
+  .opt:hover{border-color:#c7cdfb;background:#fafaff;transform:translateY(-1px);
+    box-shadow:0 8px 18px -14px rgba(79,70,229,.9)}
+  .opt .k{flex:0 0 24px;height:24px;border-radius:8px;background:#eef1f8;color:#64748b;
+    display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;margin-top:1px;
+    transition:background .16s,color .16s;}
+  .opt:hover .k{background:#4f46e5;color:#fff}
+  .opt.picked{border-color:#4f46e5;background:#f4f3ff}
+  .opt.picked .k{background:#4f46e5;color:#fff}
+  .qfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+  .linkbtn{background:none;border:0;font-family:inherit;font-size:14px;color:#64748b;
+    cursor:pointer;padding:10px 12px;border-radius:10px;transition:.16s;
+    min-height:44px;touch-action:manipulation;-webkit-appearance:none;appearance:none;}
+  .linkbtn:hover{background:#eef1f8;color:#334155}
+  .linkbtn:disabled{opacity:.35;cursor:not-allowed;background:none}
+  .hint{font-size:12.5px;color:#94a3b8;text-align:right}
+
+  .sec-title{font-size:13px;font-weight:800;letter-spacing:1.4px;color:#94a3b8;margin:30px 0 12px}
+  .maincard{border-radius:22px;padding:26px 24px;color:#fff;position:relative;overflow:hidden;
+    box-shadow:0 20px 42px -26px rgba(15,23,42,.7);}
+  .maincard:after{content:"";position:absolute;right:-40px;top:-40px;width:170px;height:170px;border-radius:50%;
+    background:rgba(255,255,255,.12);pointer-events:none;}
+  .maincard .lab{font-size:12.5px;letter-spacing:1.6px;opacity:.85;font-weight:700}
+  .maincard h2{font-size:clamp(22px,6vw,29px);letter-spacing:-.5px;margin:6px 0 10px}
+  .maincard p{font-size:14.5px;line-height:1.75;opacity:.96;max-width:92%}
+  .maincard .scorebadge{position:absolute;right:22px;top:22px;background:rgba(255,255,255,.2);
+    border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:6px 12px;
+    font-size:13px;font-weight:800;z-index:1;}
+  .card{background:#fff;border:1px solid #e9edf5;border-radius:18px;padding:22px;
+    box-shadow:0 1px 2px rgba(15,23,42,.04),0 16px 34px -30px rgba(15,23,42,.4);}
+  .radar-wrap{display:flex;justify-content:center;padding:6px 0 2px;width:100%;overflow:hidden}
+  canvas{display:block;max-width:100%}
+  .bars{margin-top:6px;display:flex;flex-direction:column;gap:11px}
+  .brow{display:grid;grid-template-columns:82px 1fr 42px;align-items:center;gap:11px;font-size:13.5px}
+  .brow .nm{color:#475569;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .brow .track{height:9px;background:#eef1f8;border-radius:99px;overflow:hidden}
+  .brow .track > i{display:block;height:100%;border-radius:99px;width:0;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .brow .vl{text-align:right;font-weight:800;color:#334155;font-variant-numeric:tabular-nums}
+  .profile{margin-top:18px;padding:16px 18px;border-radius:14px;background:#f8fafc;border:1px solid #eef2f7;
+    font-size:14.5px;color:#334155;line-height:1.8;}
+  .profile b{color:#4f46e5}
+  .rcard{margin-top:14px}
+  .rhead{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid #eef2f7;margin-bottom:16px;flex-wrap:wrap}
+  .rhead .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+  .rhead h3{font-size:clamp(16px,4.2vw,18px);letter-spacing:-.2px}
+  .rhead .sub{font-size:13px;color:#64748b;margin-top:1px}
+  .rhead .sc{margin-left:auto;font-size:20px;font-weight:800;color:#334155;font-variant-numeric:tabular-nums}
+  .rhead .sc small{font-size:12px;color:#94a3b8;font-weight:600}
+  .blk{margin-top:16px}
+  .blk h4{font-size:13px;font-weight:800;color:#334155;letter-spacing:.4px;margin-bottom:8px;
+    display:flex;align-items:center;gap:7px;}
+  .blk h4:before{content:"";width:3px;height:13px;border-radius:2px;background:#4f46e5;display:block;flex:0 0 auto}
+  .blk p{font-size:14.5px;color:#475569;line-height:1.8}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:13px;color:#475569;background:#f5f7fb;border:1px solid #e9edf5;padding:5px 11px;border-radius:9px}
+  ol.steps{list-style:none;counter-reset:s}
+  ol.steps li{counter-increment:s;position:relative;padding:7px 0 7px 34px;font-size:14.5px;color:#475569;line-height:1.7;}
+  ol.steps li:before{content:counter(s);position:absolute;left:0;top:9px;width:21px;height:21px;border-radius:7px;
+    background:#eef1ff;color:#4f46e5;font-size:11.5px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;}
+  ul.dots{list-style:none}
+  ul.dots li{position:relative;padding:6px 0 6px 17px;font-size:14.5px;color:#475569;line-height:1.7}
+  ul.dots li:before{content:"";position:absolute;left:0;top:15px;width:5px;height:5px;border-radius:50%;background:#cbd5e1}
+  ul.warn li:before{background:#fca5a5}
+  .goal{margin-top:16px;padding:14px 16px;border-radius:13px;
+    background:linear-gradient(120deg,#f5f3ff,#eefbff);border:1px solid #e6e6fb;
+    font-size:14.5px;color:#3730a3;line-height:1.75;}
+  .goal b{font-weight:800}
+  .combo{font-size:15px;color:#334155;line-height:1.85}
+  .combo .hl{font-weight:800}
+  .disc{margin-top:26px;font-size:12.5px;color:#94a3b8;line-height:1.85;
+    border-top:1px solid #e9edf5;padding-top:18px;}
+
+  .wxtip{position:fixed;left:0;top:0;right:0;bottom:0;z-index:200;
+    background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;padding:24px;
+    -webkit-overflow-scrolling:touch;}
+  .wxtip.on{display:flex}
+  .wxtip-box{background:#fff;border-radius:20px;padding:26px 22px 22px;max-width:400px;width:100%;
+    box-shadow:0 24px 60px -20px rgba(15,23,42,.7);animation:popIn .22s ease both;
+    max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  @keyframes popIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}
+  .wxtip-box h3{font-size:18px;letter-spacing:-.2px;margin-bottom:12px;color:#0f172a}
+  .wxtip-box p{font-size:14.5px;color:#475569;line-height:1.8;margin-bottom:10px}
+  .wxtip-box .hl{color:#4f46e5;font-weight:700}
+  .wxtip-box ol{margin:12px 0 6px 20px;font-size:14.5px;color:#475569;line-height:1.9}
+  .wxtip-box ol li{margin-bottom:2px}
+  .wxtip-actions{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .wxtip-actions .btn{font-size:15px;padding:14px 18px}
+
+  .toast{position:fixed;left:50%;bottom:calc(34px + env(safe-area-inset-bottom,0px));
+    transform:translate(-50%,20px);background:#0f172a;color:#fff;font-size:13.5px;
+    padding:11px 20px;border-radius:12px;opacity:0;pointer-events:none;transition:.28s;z-index:300;
+    max-width:calc(100vw - 40px);text-align:center;line-height:1.5;}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:480px){
+    .app{padding-top:16px;padding-bottom:60px}
+    .hero{padding:24px 20px 22px}
+    .qbox{padding:20px 17px 18px}
+    .qfoot .hint{font-size:12px}
+    .btn-row{flex-direction:column}
+    .btn-row .btn{width:100%;flex:1 1 auto}
+    .rhead .sc{font-size:18px}
+  }
+  @media (max-width:380px){
+    .brow{grid-template-columns:68px 1fr 36px;gap:8px;font-size:12.5px}
+    .maincard{padding:22px 18px}
+    .maincard .scorebadge{right:16px;top:16px;padding:5px 10px;font-size:12px}
+    .card{padding:18px 16px}
+    .rhead h3{font-size:15.5px}
+    .rhead .sub{font-size:12px}
+  }
+  @media (min-width:768px){.app{padding-top:34px;padding-bottom:90px}}
+  @media (min-width:1024px){.app{max-width:820px}}
+  @media (max-height:520px) and (orientation:landscape){.radar-wrap{padding:0}}
+  @media print{
+    body{background:#fff}
+    .btn,.btn-row,.toast,.brand,.privacy,.wxtip{display:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand"><i></i><span>副业方向定位器</span></div>
+
+  <section id="screen-start" class="screen active">
+    <div class="hero">
+      <h1>40 道题，找到<br><em>最适合你的那一条副业路径</em></h1>
+      <p class="sub">覆盖 12 大副业方向：技能服务、AI 工具、内容创作、知识教学、电商带货、本地服务、平台兼职、中介撮合、虚拟产品、开发工具、社群运营、本地商家服务。</p>
+
+      <div class="meta">
+        <span class="tag">40 题 · 约 7 分钟</span>
+        <span class="tag">12 大方向评分</span>
+        <span class="tag">主 / 次方向</span>
+        <span class="tag">雷达图报告</span>
+        <span class="tag">可导出报告</span>
+      </div>
+
+      <div class="privacy">
+        <b>隐私说明：</b>本页面为纯本地工具。不登录、不收集手机号、不上传答题数据、不调用定位 / 摄像头 / 麦克风、不接入任何第三方服务。所有计算都在你当前这台设备的浏览器内存中完成，关闭页面即清空。
+      </div>
+
+      <button class="btn mt24" id="btn-start" type="button">开始测试</button>
+    </div>
+  </section>
+
+  <section id="screen-quiz" class="screen">
+    <div class="qhead">
+      <div class="qmeta">
+        <span>第 <b id="q-idx">1</b> / 40 题</span>
+        <span id="q-pct">0%</span>
+      </div>
+      <div class="bar"><i id="q-bar"></i></div>
+    </div>
+
+    <div class="qbox" id="q-box">
+      <div class="qnum" id="q-num">QUESTION 01</div>
+      <div class="qtext" id="q-text"></div>
+      <div class="options" id="q-opts"></div>
+    </div>
+
+    <div class="qfoot">
+      <button class="linkbtn" id="btn-prev" type="button">← 上一题</button>
+      <span class="hint">选择后自动进入下一题</span>
+    </div>
+  </section>
+
+  <section id="screen-result" class="screen">
+    <div id="result-body"></div>
+  </section>
+</div>
+
+<div class="wxtip" id="wxtip">
+  <div class="wxtip-box">
+    <h3>在微信里保存报告</h3>
+    <p>微信内置浏览器出于安全限制，<span class="hl">无法直接下载文件</span>。请按下面任意一种方式操作：</p>
+    <ol>
+      <li>点右上角 <b>···</b> → <b>在浏览器打开</b>，再点「导出报告」即可保存完整 HTML 文件；</li>
+      <li>或直接点下方的「复制文字报告」，粘贴到备忘录 / 文档里保存。</li>
+    </ol>
+    <div class="wxtip-actions">
+      <button class="btn" id="wxtip-copy" type="button">复制文字报告</button>
+      <button class="btn ghost" id="wxtip-close" type="button">我知道了</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   0. 环境检测
+   ========================================================= */
+function ua() { return navigator.userAgent || ""; }
+function isWeChat() { return /micromessenger/i.test(ua()); }
+function isIOS() { return /iPad|iPhone|iPod/.test(ua()) && !window.MSStream; }
+function isAndroid() { return /android/i.test(ua()); }
+
+/* =========================================================
+   1. 十二大副业方向定义
+   ========================================================= */
+var DIMS = [
+  {
+    name: "内容创作", short: "内容", color: "#6366F1",
+    tagline: "用持续输出换取注意力，再把注意力变成收入。",
+    fit: "表达欲强、愿意长期更新、对选题和情绪敏感的人。",
+    forms: ["小红书 / 抖音 / 视频号", "公众号 / 知乎 / 头条", "B 站 / 播客 / 音频", "图文、短视频、直播"],
+    ladder: ["免费内容积累起量", "平台流量分成", "商单 / 广告合作", "带货佣金", "自有产品或私域承接"],
+    skills: ["选题能力", "标题与开头能力", "基础剪辑或排版", "长期稳定更新"],
+    week: ["选一个你愿意讲三年的细分方向", "找 10 个对标账号，记录爆款选题", "确定主平台，注册并完善资料", "发出第一条内容", "复盘数据，找出一个可改进的点", "再发第二条，换一个方向测试", "排出「每周三条」的固定档期"],
+    m30: "累计更新 30 条内容，找到 2 个数据明显更好的选题方向。",
+    risks: ["前期长时间零收入", "平台规则与推荐机制随时变化", "流量焦虑，被数据绑架情绪", "内容被搬运、抄袭", "过度依赖单一平台"],
+    metrics: ["完播率 / 阅读完成率", "互动率（赞藏评）", "涨粉速度", "私信咨询量"],
+    income: "前 3 个月通常接近于 0；6-12 个月可能月入几百到几千；头部长尾差距极大。",
+    amp: "内容能力可以为任何方向带来免费流量，是最通用的放大器。"
+  },
+  {
+    name: "技能服务", short: "技能", color: "#0EA5E9",
+    tagline: "把一项专业技能打包成明确交付的服务，按次或按项目收费。",
+    fit: "有一技之长、做事靠谱、能守住交付时间的人。",
+    forms: ["PPT 制作 / 美化", "PS 修图 / 海报 / 抠图", "视频剪辑 / 字幕 / 配音", "文案 / 翻译 / 排版", "代运营 / 专业咨询"],
+    ladder: ["单次接单，先跑通一次交付", "提高客单价，筛选优质客户", "打包成套餐或月度服务", "长期顾问，收月费", "组建小团队承接更大的单"],
+    skills: ["过硬的专业能力", "报价与谈价能力", "需求沟通与预期管理", "按时交付的稳定性"],
+    week: ["列出你能提供的 3 项服务", "给每项服务定一个起步价（宁低勿空）", "整理 3 个作品或案例，哪怕是免费做的", "在 2 个平台挂上你的服务", "主动联系 5 个可能需要的熟人", "接下第一单，哪怕很小", "交付后要一句评价，写进你的案例库"],
+    m30: "完成 3-5 单真实交付，明确自己的标准报价和交付流程。",
+    risks: ["时间换钱，有明确天花板", "客户压价、无限改稿", "账期拖延甚至跑单", "需求有明显的季节波动", "口头约定易生纠纷"],
+    metrics: ["客单价", "复购率", "平均交付时长", "转介绍率"],
+    income: "起步阶段单量不稳定；稳定后按技能稀缺度，从月入几百到上万都有可能。",
+    amp: "服务能力可以最快验证付费意愿，帮你拿到第一批真实现金流。"
+  },
+  {
+    name: "AI 工具", short: "AI", color: "#14B8A6",
+    tagline: "用 AI 工具大幅提升效率，把「会用 AI」本身变成竞争力。",
+    fit: "对新技术敏感、愿意持续试新工具、擅长总结提示词的人。",
+    forms: ["AI 文案 / 小红书爆款改写", "AI 图片 / 头像 / 商品图", "AI 视频 / 数字人 / 口播", "AI 办公 / 表格 / 纪要", "AI 资料整理 / 知识库"],
+    ladder: ["帮熟人免费做几单", "接单：按篇 / 按张 / 按条收费", "打包成「AI 内容代做」月度服务", "做 AI 工具教学和陪跑", "沉淀提示词包或工作流产品"],
+    skills: ["主流 AI 工具的熟练度", "提示词工程", "结果二次加工能力", "快速学习新工具"],
+    week: ["选定 1-2 个主流 AI 工具深入练熟", "整理 10 组能出好结果的提示词", "免费帮 2 个人解决实际问题", "把你的工作流写成一篇分享", "在平台挂出「AI 代做」服务", "接第一单，按交付标准做完整", "复盘：哪类需求最好接、最赚钱"],
+    m30: "沉淀一套可复用的 AI 工作流，完成 5 单真实交付。",
+    risks: ["工具迭代快，需持续学习", "平台可能限制 AI 生成内容", "同质化严重，容易价格战", "客户对 AI 产出质量的预期不稳定", "不要承诺「100% 原创 / 过原创检测」"],
+    metrics: ["单量", "客单价", "交付时长", "复购率"],
+    income: "按件或按套收费，单量稳定后月入几百到几千较常见。",
+    amp: "AI 能力能极大压缩内容、服务、产品的生产时间，是效率放大器。"
+  },
+  {
+    name: "知识教学", short: "教学", color: "#10B981",
+    tagline: "把你会的东西，系统地教给还不会的人。",
+    fit: "表达清晰、有耐心、并且真的亲手做过这件事的人。",
+    forms: ["家教 / 作业辅导", "技能教学 / 1v1 陪跑", "小班直播课 / 训练营", "录播课程", "资料整理 / 答疑社群"],
+    ladder: ["免费答疑攒口碑", "低价 1v1", "小班课", "训练营 / 系统课", "录播课 + 长期社群"],
+    skills: ["拆解能力", "讲课与表达能力", "课程设计", "答疑的耐心"],
+    week: ["写下你最擅长教的一个技能", "列出新手最常卡的 5 个问题", "免费带 1 个朋友走一遍完整流程", "收集他的反馈和真实卡点", "把流程整理成一份课程大纲", "定一个低价，招 3 个学员", "开第一节课，录下来复盘"],
+    m30: "完整带完一期（3-5 人），形成可复用的课程大纲与答疑库。",
+    risks: ["教的内容你自己必须先做到", "口碑一旦崩塌很难挽回", "退费与效果承诺容易起纠纷", "课程被录屏盗卖", "过度营销会反噬信任"],
+    metrics: ["完课率", "学员满意度", "续费率", "转介绍率"],
+    income: "1v1 单价从几十到几百每小时；训练营从几百到几千每期。",
+    amp: "教学能力能显著提高客单价和信任度，让同样的流量赚更多。"
+  },
+  {
+    name: "电商带货", short: "电商", color: "#F59E0B",
+    tagline: "靠选品能力和流量转化，赚差价或佣金。",
+    fit: "对价格敏感、喜欢研究商品、能盯着数据反复优化的人。",
+    forms: ["二手转卖 / 闲置代卖", "无货源 / 一件代发", "电商客服 / 售后", "商品推广 / 分销佣金", "直播带货"],
+    ladder: ["小成本测品", "跑通第一单利润", "复制放大", "稳定供应链", "自有品牌"],
+    skills: ["选品眼光", "算账能力", "内容 / 投放能力", "售后处理"],
+    week: ["选一个你自己熟悉的品类", "找 5 个对标卖家，拆解他们的价格和卖点", "用最小成本上架 1 个商品", "写一条能打动人的商品描述", "想尽办法卖出第一单", "算清楚这一单到底赚了还是亏了", "复盘：这个动作能不能复制第二单"],
+    m30: "跑通一个能稳定出单的小单品，明确它的毛利与退货率。",
+    risks: ["压货占用资金", "退货率和运费险吃掉利润", "平台罚款与规则变动", "售后纠纷消耗精力", "盲目跟卖可能侵权"],
+    metrics: ["毛利率", "退货率", "动销率", "投入产出比"],
+    income: "起步阶段可能亏钱；跑通之后收入由单量决定，波动较大。",
+    amp: "带货能力能把流量直接变成钱，是最直接的变现出口。"
+  },
+  {
+    name: "本地服务", short: "本地", color: "#EF4444",
+    tagline: "在本地三公里内，用手艺和服务赚钱。",
+    fit: "动手能力强、不怕跑动、喜欢面对面打交道的人。",
+    forms: ["宠物照看 / 遛狗 / 上门喂养", "摄影 / 约拍 / 写真", "跑腿 / 代办 / 排队", "家政 / 保洁 / 收纳", "活动协助 / 临时帮手"],
+    ladder: ["熟人单", "小区口碑", "固定客户包月", "带徒弟 / 组队", "开固定档口"],
+    skills: ["手艺", "守时", "面对面沟通", "体力"],
+    week: ["确定你能提供的 1 项线下服务", "算清成本，定一个不亏的价", "在小区群 / 朋友圈发一条", "接第一单，把它做好", "请客户给一个好评或推荐", "再发一条，附上真实评价", "复盘：哪类需求最多、哪类最赚钱"],
+    m30: "完成 10 单，积累 5 条真实好评。",
+    risks: ["体力消耗大", "天气和季节影响明显", "人身与财产安全风险", "纠纷时取证困难", "时间不可复制，天花板明显"],
+    metrics: ["单量", "复购率", "好评率", "获客成本"],
+    income: "按单计费，勤快程度几乎直接决定收入，旺季淡季差距大。",
+    amp: "线下服务能建立最扎实的本地口碑，是最难被线上替代的护城河。"
+  },
+  {
+    name: "平台兼职", short: "兼职", color: "#8B5CF6",
+    tagline: "在平台上按单接活，时间灵活，当天结算。",
+    fit: "时间碎片化、想快速拿到现金流、执行力强的人。",
+    forms: ["配送 / 跑腿 / 代买", "门店兼职 / 小时工", "活动兼职 / 展会协助", "线上客服 / 数据标注", "临时任务 / 众包"],
+    ladder: ["注册平台，先跑几单", "熟悉规则，提高单价", "挑高性价比的时段和区域", "多平台并行", "带新人 / 组小队"],
+    skills: ["守时", "体力", "规则意识", "基础的沟通能力"],
+    week: ["选 2 个靠谱平台，完成注册和实名", "看清结算规则和罚款条款", "先跑 5 单，别急着接高难度的", "记录每单实际到手时间和收入", "找出时薪最高的 1-2 类任务", "集中做这几类任务", "复盘：哪些时段和区域最划算"],
+    m30: "稳定做到每周 3-5 单，明确你的实际时薪。",
+    risks: ["体力消耗大", "平台规则和单价会变", "没有积累性，停手就停收入", "注意交通安全和人身安全", "任何要求先交押金的平台都要警惕"],
+    metrics: ["实际时薪", "单量", "好评率", "完单率"],
+    income: "按单或按小时结算，勤快程度几乎直接决定收入。",
+    amp: "平台兼职能快速验证「靠时间赚钱」的真实感受，帮你确认要不要转向更长期的路径。"
+  },
+  {
+    name: "中介撮合", short: "撮合", color: "#F97316",
+    tagline: "连接供需两端，靠信息差和服务能力赚取佣金。",
+    fit: "人脉广、擅长沟通、对供需关系敏感的人。",
+    forms: ["家教撮合 / 学员对接老师", "招聘撮合 / 内推", "服务需求撮合（家政 / 维修）", "本地资源对接", "行业信息对接"],
+    ladder: ["免费帮朋友对接几次", "收小额服务费", "建立稳定的供需池", "按月收会员 / 服务费", "组团队做规模化撮合"],
+    skills: ["沟通谈判", "信息收集", "信任经营", "需求判断"],
+    week: ["选定一个你熟悉的领域", "列出 10 个供给方和 10 个需求方", "免费撮合成功 1 次", "总结这次撮合的关键动作", "设计你的收费方式（一次性 / 会员）", "正式对外发布你的撮合服务", "复盘：哪类撮合最顺、最赚钱"],
+    m30: "完成 5 次成功撮合，形成可复制的撮合流程。",
+    risks: ["双方跳单，佣金拿不到", "信任建立慢", "纠纷时需要承担调解角色", "法律和合规边界要清楚", "口碑一旦出问题很难挽回"],
+    metrics: ["撮合成功率", "单次佣金", "复购率", "转介绍率"],
+    income: "按次抽佣或按月收费，取决于撮合单价和成功率。",
+    amp: "撮合能力能把你的关系网直接变成收入，是最轻资产的变现方式之一。"
+  },
+  {
+    name: "虚拟产品", short: "虚拟", color: "#A855F7",
+    tagline: "做一次，卖很多次。模板、表格、资料包都是资产。",
+    fit: "喜欢整理、打磨细节、能忍受孤独把产品做出来的人。",
+    forms: ["PPT / Notion / Excel 模板", "表格 / 计划表 / 管理工具", "资料包 / 题库 / 清单", "电子书 / 手册", "课程辅助材料 / 素材包"],
+    ladder: ["免费版引流", "单份售卖", "套装 / 合集", "订阅制", "定制 + 商用授权"],
+    skills: ["产品思维", "工具熟练度", "上架与运营", "持续迭代"],
+    week: ["找一个你自己反复遇到的麻烦", "看市面上有没有人在卖现成的解决方案", "做出一版最粗糙但可用的版本", "找 3 个人试用，收集反馈", "改一版，定一个低价", "上架到一个能收款的平台", "卖出第一份，问买家为什么买"],
+    m30: "上架 1 个产品，完成 10 笔真实交易。",
+    risks: ["盗版难防", "同质化严重", "平台抽成与审核限制", "维护成本常被低估", "定价过低导致根本不赚钱"],
+    metrics: ["转化率", "客单价", "复购率", "退款率"],
+    income: "单份几十到几百元，收入由销量决定，长尾效应明显。",
+    amp: "产品能力能把你的时间从「卖一次」变成「卖很多次」，突破时间天花板。"
+  },
+  {
+    name: "开发工具", short: "开发", color: "#3B82F6",
+    tagline: "用代码或低代码平台，做一个能自动解决问题的工具。",
+    fit: "逻辑清晰、喜欢折腾工具、能自己啃文档的人。",
+    forms: ["小程序 / 网页工具", "行业计算器 / 生成器", "浏览器插件 / 脚本", "效率工具 / 自动化流程", "数据看板 / 报表工具"],
+    ladder: ["免费工具引流", "单次授权 / 买断", "订阅制", "定制开发", "为行业提供整体解决方案"],
+    skills: ["编程或低代码能力", "需求判断", "产品设计", "持续维护"],
+    week: ["找一个你或身边人反复手动做的事", "判断能不能用工具自动化", "用最低成本做出可运行版本", "找 5 个人试用", "根据反馈改一版", "选一个平台发布", "收到第一个真实用户"],
+    m30: "上线 1 个工具，获得 10 个真实用户。",
+    risks: ["开发和维护成本高", "需求判断错了就白做", "平台政策风险", "盗版和破解", "免费用户多、付费用户少"],
+    metrics: ["用户数", "留存率", "付费转化率", "客单价"],
+    income: "买断几十到几百，订阅按月收费，定制按项目报价。",
+    amp: "工具能力能把你从重复劳动里解放出来，同时形成可复用的技术资产。"
+  },
+  {
+    name: "社群运营", short: "社群", color: "#EC4899",
+    tagline: "把人聚起来，靠关系和信任变现。",
+    fit: "热心、会来事、能长期在线维护关系的人。",
+    forms: ["付费社群 / 会员制", "打卡共学营 / 训练营", "资源对接群", "同城兴趣群", "行业交流群"],
+    ladder: ["免费群攒人", "小额会员费", "付费活动 / 训练营", "年费会员", "撮合与服务佣金"],
+    skills: ["组织能力", "情绪劳动承受力", "规则设计", "活动策划"],
+    week: ["明确这个群为谁解决什么问题", "拉一个 30 人以内的种子群", "定 3 条群规和一个固定栏目", "办一场线上小活动", "收集成员的真实需求", "试着收一次小额费用（如 9.9 / 19.9）", "复盘：谁活跃、谁付费、为什么"],
+    m30: "稳定运营一个 100 人以上、有固定活动节奏的群。",
+    risks: ["群很容易变成死群", "情绪劳动非常消耗人", "收费需注意合规，远离传销与非法集资红线", "承诺兑现不了会瞬间崩掉信任", "平台封群风险"],
+    metrics: ["活跃度", "付费转化率", "续费率", "转介绍人数"],
+    income: "以会员费和活动费为主，收入规模由社群人数与付费率决定。",
+    amp: "社群能力能把一次性客户变成长期客户，大幅提高复购。"
+  },
+  {
+    name: "本地商家服务", short: "商家", color: "#059669",
+    tagline: "帮本地商家做线上曝光、内容、团购和物料。",
+    fit: "懂一点内容或设计、愿意跑本地、能和老板打交道的人。",
+    forms: ["门店拍摄 / 短视频代做", "团购运营 / 上架优化", "商家账号代运营", "宣传物料（海报 / 菜单 / 展架）", "本地生活平台运营"],
+    ladder: ["免费帮 1 家店做一次", "收基础拍摄或设计费", "按月代运营", "打包团购 + 内容 + 物料", "做本地商家的整体线上方案"],
+    skills: ["拍摄 / 剪辑 / 设计", "平台规则理解", "商家沟通", "结果交付"],
+    week: ["选一个熟悉的本地行业（餐饮 / 美业 / 健身）", "找 1 家店免费做一次拍摄或物料", "把成果整理成案例", "再找 2 家店谈付费合作", "定一个基础套餐价", "完成第一笔付费交付", "复盘：哪类商家最需要、最愿意付钱"],
+    m30: "签下 2 家付费商家，形成可复制的服务流程。",
+    risks: ["商家预算有限、决策慢", "效果难量化，容易被压价", "跑本地消耗时间", "平台规则和补贴变化", "账期拖延"],
+    metrics: ["签约商家数", "月服务费", "续费率", "转介绍率"],
+    income: "按次几百到几千，按月代运营从几百到上万不等。",
+    amp: "本地商家服务能建立稳定的 B 端收入，比 C 端更容易复购。"
+  }
+];
+
+/* =========================================================
+   2. 40 题题库（12 方向均衡分布）
+   每个方向出现约 13-14 次
+   ========================================================= */
+var QUESTIONS = [
+  /* ---------- 第 1-30 题（原有） ---------- */
+  { q: "周末有整整两小时空档，你最想干的事是——", o: [
+    ["写点东西，或者剪一条视频发出去", 0],
+    ["接个小单，帮人把具体问题解决掉", 1],
+    ["用 AI 快速产出一批素材或文案", 2],
+    ["研究一下最近什么产品好卖", 4]
+  ]},
+  { q: "朋友遇到麻烦第一个想到你，多半是因为你——", o: [
+    ["能把他讲明白、带他走出来", 3],
+    ["会张罗，能把一群人对上号", 10],
+    ["认识人多，能帮他找到买家或合作方", 7],
+    ["能直接上手帮他把事办成", 5]
+  ]},
+  { q: "你最享受的「从 0 到 1」过程是——", o: [
+    ["把一个重复动作做成自动化流程", 9],
+    ["把一套东西整理成能反复卖的成品", 8],
+    ["把一个没人要的东西卖出去", 4],
+    ["把一个想法变成一条有人看的内容", 0]
+  ]},
+  { q: "如果必须选一件「重复做也不烦」的事，你选——", o: [
+    ["每天在线下跑动、面对面服务", 5],
+    ["每天帮本地商家拍素材、做宣传", 11],
+    ["每天按单跑、按流程完成任务", 6],
+    ["每天用 AI 试新提示词、优化产出效果", 2]
+  ]},
+  { q: "别人夸你，最让你受用的是哪一句？", o: [
+    ["「有你在，这个群就散不了」", 10],
+    ["「你这套东西太好用了，能不能给我一份」", 8],
+    ["「找你办事最放心，靠谱」", 5],
+    ["「你写的东西 / 拍的东西真好看」", 0]
+  ]},
+  { q: "你最想拥有的那种「资产」是——", o: [
+    ["一套做完就能反复卖的成品", 8],
+    ["一个能自动运行的效率工具", 9],
+    ["一套能反复开班的课程体系", 3],
+    ["一批认可你专业能力的客户", 1]
+  ]},
+  { q: "让你选一个「起步方式」，你更倾向——", o: [
+    ["先去平台接几单，试试自己的效率", 6],
+    ["先帮附近商家做点宣传物料", 11],
+    ["先帮身边朋友对接一次供需", 7],
+    ["先从身边三公里内的需求做起", 5]
+  ]},
+  { q: "你手机里最常打开的，是下面哪一类？", o: [
+    ["AI 工具 / 提示词 / 自动化", 2],
+    ["开发工具 / 效率软件 / 低代码平台", 9],
+    ["接单平台 / 专业工具 / 协作软件", 1],
+    ["购物 / 比价 / 带货 / 选品", 4]
+  ]},
+  { q: "一个完全陌生的领域摆在你面前，你的第一反应是——", o: [
+    ["先把它学透，再讲给别人听", 3],
+    ["先看供需两端有没有信息差", 7],
+    ["先看能不能聚起一群人一起搞", 10],
+    ["先看这个领域有没有流量和话题", 0]
+  ]},
+  { q: "你觉得自己最强的能力是——", o: [
+    ["判断什么东西会有人买", 4],
+    ["帮商家把服务或产品讲清楚", 11],
+    ["能按标准流程稳定、准时地完成任务", 6],
+    ["把混乱的东西整理成模板", 8]
+  ]},
+  { q: "你更能忍受哪一种辛苦？", o: [
+    ["风吹日晒跑现场", 5],
+    ["随时在线回消息、处理情绪", 10],
+    ["一个人闷头调试和优化工具", 9],
+    ["反复调提示词、对比不同模型的效果", 2]
+  ]},
+  { q: "如果只能选一种「被人需要」的方式——", o: [
+    ["有人离不开你的专业能力", 1],
+    ["有人离不开你的讲解和指导", 3],
+    ["有人离不开你牵线搭桥", 7],
+    ["有人离不开你稳定靠谱的执行", 6]
+  ]},
+  { q: "你更愿意把时间投在——", o: [
+    ["做一次、卖很多次的东西", 8],
+    ["做一次、能被很多人看到的内容", 0],
+    ["做一次、能帮商家持续带来客流的事", 11],
+    ["做一次、能持续产生佣金或差价的事", 4]
+  ]},
+  { q: "面对「要不要开始」，你最可能的理由是——", o: [
+    ["身边真的有人需要这个", 5],
+    ["已经有人问过我做不做", 1],
+    ["我发现某个流程可以自动化", 9],
+    ["我发现一群人缺少一个组织者", 10]
+  ]},
+  { q: "你更喜欢的反馈是——", o: [
+    ["「你这条火了」", 0],
+    ["「按你说的，我卖出去了」", 4],
+    ["「听你一讲我终于懂了」", 3],
+    ["「你帮我找到的那个人太合适了」", 7]
+  ]},
+  { q: "你手上最能变现的资源是——", o: [
+    ["一门别人不会的专业技能", 1],
+    ["大量可自由支配的时间和体力", 6],
+    ["对本地商家需求的了解", 11],
+    ["对 AI 工具的熟练和持续跟进", 2]
+  ]},
+  { q: "让你做一件「要持续三个月」的事，你选——", o: [
+    ["带一批人从零学一门技能", 3],
+    ["把一个小群做到 500 人活跃", 10],
+    ["把一套产品从 1.0 迭代到 3.0", 8],
+    ["把一个本地服务的口碑做起来", 5]
+  ]},
+  { q: "你更想摆脱的状态是——", o: [
+    ["有好货却没人知道", 4],
+    ["有好点子却没做成产品", 9],
+    ["做了很多却没人看", 0],
+    ["身边明明有供需却对不上", 7]
+  ]},
+  { q: "如果明天就开始做副业，你的第一步是——", o: [
+    ["先拉个群，试试有没有人响应", 10],
+    ["先去周边问一圈有没有需求", 5],
+    ["先去平台注册、把资料填好", 6],
+    ["先整理案例，挂出服务", 1]
+  ]},
+  { q: "你更看重副业的哪一点？", o: [
+    ["睡觉的时候也有收入", 8],
+    ["能被更多人认识", 0],
+    ["能帮到身边实实在在的人", 11],
+    ["能把经验传给更多人", 3]
+  ]},
+  { q: "你更擅长处理哪一类「麻烦」？", o: [
+    ["现场突发状况、临时救急", 5],
+    ["技术难题、系统对接", 9],
+    ["让 AI 输出符合要求的成品", 2],
+    ["算清楚一单到底赚不赚钱", 4]
+  ]},
+  { q: "你更愿意花时间学——", o: [
+    ["选题、文案、剪辑、排版", 0],
+    ["教学法、课程设计", 3],
+    ["一项更硬的专业技能", 1],
+    ["供需分析、谈判、撮合技巧", 7]
+  ]},
+  { q: "别人找你帮忙，最常是哪一种？", o: [
+    ["帮我张罗一下、拉个群", 10],
+    ["帮我看看这个能不能卖", 4],
+    ["帮我顶个班、跑一趟", 6],
+    ["帮我做套模板、整理份资料", 8]
+  ]},
+  { q: "你理想的副业节奏是——", o: [
+    ["固定时间答疑授课", 3],
+    ["定期帮商家更新素材和活动", 11],
+    ["跟热点走，忙闲不均", 0],
+    ["集中开发一段时间，然后持续维护", 9]
+  ]},
+  { q: "你更相信哪一种赚钱方式？", o: [
+    ["低买高卖，赚差价", 4],
+    ["先把人聚起来，钱自然来", 10],
+    ["靠手艺和服务收钱最踏实", 5],
+    ["靠专业能力按次收费", 1]
+  ]},
+  { q: "你更想被叫做——", o: [
+    ["撮合人 / 连接者", 7],
+    ["产品作者 / 工具作者", 8],
+    ["靠谱的多面手", 6],
+    ["AI 效率专家", 2]
+  ]},
+  { q: "如果只能选一个起步成本最低的——", o: [
+    ["用手机拍内容", 0],
+    ["用低代码平台搭个小工具", 9],
+    ["帮附近商家拍条宣传视频", 11],
+    ["先从免费答疑开始", 3]
+  ]},
+  { q: "你更怕哪一种结果？", o: [
+    ["跑断腿却没人认可", 5],
+    ["接不到单、没客户", 1],
+    ["建了群却没人说话", 10],
+    ["压了一堆货卖不出去", 4]
+  ]},
+  { q: "给你一个陌生工具，你会先想——", o: [
+    ["能不能做条内容讲讲它", 0],
+    ["能不能用它批量产出内容", 2],
+    ["能不能用它连接供需", 7],
+    ["能不能用它提高接单效率", 6]
+  ]},
+  { q: "如果三年后回头看，你希望自己——", o: [
+    ["带出了一批学生", 3],
+    ["跑通了一条稳定的卖货链路", 4],
+    ["做出了几款有人持续付费的产品", 8],
+    ["拥有一个属于自己的圈子", 10]
+  ]},
+
+  /* ---------- 第 31-40 题（新增） ---------- */
+  { q: "你最近在网上看到一个新机会，你会先做什么？", o: [
+    ["先看看能不能用 AI 工具快速做出样品", 2],
+    ["先看看附近有没有商家在为此发愁", 11],
+    ["先看看平台有没有相关任务可以接", 6],
+    ["先看看能不能搭个小工具解决它", 9]
+  ]},
+  { q: "如果只给你一部手机，你最可能先开始做的是——", o: [
+    ["用 AI 生成内容，先发几条试试", 2],
+    ["拍附近商家的门头和产品，做成视频", 11],
+    ["在群里问一圈，看谁需要谁供应", 7],
+    ["直接拍一条自己的生活或观点", 0]
+  ]},
+  { q: "朋友让你帮忙，哪种请求你最不想拒绝？", o: [
+    ["帮我做个 PPT / 修张图", 1],
+    ["给我讲讲这道题 / 这个知识点", 3],
+    ["帮我管管群、组织一次活动", 10],
+    ["帮我用 AI 写一段文案", 2]
+  ]},
+  { q: "下面哪种「收入到账」的画面最让你有动力？", o: [
+    ["完成一单任务，平台立刻结算", 6],
+    ["卖出第 100 份模板，还在持续进账", 8],
+    ["一单货发出去，利润算得清清楚楚", 4],
+    ["商家说这个月续约，继续合作", 11]
+  ]},
+  { q: "你更愿意花一个周末去琢磨——", o: [
+    ["把一个重复流程做成自动运行的工具", 9],
+    ["帮邻居或朋友把一件具体的事办好", 5],
+    ["把一项专业技能再练精一点", 1],
+    ["把 AI 提示词调到出图更稳定", 2]
+  ]},
+  { q: "你觉得自己最像下面哪一种角色？", o: [
+    ["帮别人牵线搭桥的中间人", 7],
+    ["把想法写成内容分享出去的人", 0],
+    ["帮商家把生意做好的幕后帮手", 11],
+    ["把一群人组织起来做事的群主", 10]
+  ]},
+  { q: "你更愿意把自己的时间花在——", o: [
+    ["把知识讲清楚、带别人学会", 3],
+    ["把资料整理成可复用的成品", 8],
+    ["按平台规则稳定完成任务", 6],
+    ["把专业能力练到能收更高价", 1]
+  ]},
+  { q: "如果要你选一个「能长期做下去」的理由，你选——", o: [
+    ["这个工具能持续帮人省时间", 9],
+    ["这个供需关系能持续产生佣金", 7],
+    ["这家店能持续需要我的服务", 11],
+    ["这批学员能持续跟我学下去", 3]
+  ]},
+  { q: "你更愿意面对哪一种工作场景？", o: [
+    ["盯着后台数据，调整价格和标题", 4],
+    ["面对面服务客户，当场解决问题", 5],
+    ["在群里和成员互动，活跃气氛", 10],
+    ["按排班表执行任务，到点收工", 6]
+  ]},
+  { q: "你更想做出哪一种「能被别人需要」的东西？", o: [
+    ["一套好用的 AI 工作流", 2],
+    ["一个能自动运行的小工具", 9],
+    ["一份反复卖得动的模板或资料", 8],
+    ["一个能持续撮合供需的渠道", 7]
+  ]}
+];
+
+/* =========================================================
+   3. 基础数据与状态
+   ========================================================= */
+var TOTAL = QUESTIONS.length;
+var NDIM = DIMS.length;           // 12
+var dimMax = new Array(NDIM).fill(0);
+QUESTIONS.forEach(function (item) {
+  item.o.forEach(function (o) { dimMax[o[1]]++; });
+});
+
+var state = { index: 0, answers: new Array(TOTAL).fill(null) };
+
+/* =========================================================
+   4. 工具函数
+   ========================================================= */
+function $(id) { return document.getElementById(id); }
+function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+function show(screenId) {
+  var all = document.querySelectorAll(".screen");
+  for (var i = 0; i < all.length; i++) all[i].classList.remove("active");
+  $(screenId).classList.add("active");
+  try { window.scrollTo(0, 0); } catch (e) {}
+}
+var toastTimer = null;
+function toast(msg) {
+  var t = $("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove("on"); }, 2400);
+}
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+/* =========================================================
+   5. 答题流程
+   ========================================================= */
+function renderQuiz() {
+  var i = state.index;
+  var item = QUESTIONS[i];
+
+  $("q-idx").textContent = i + 1;
+  var answered = 0;
+  for (var k = 0; k < state.answers.length; k++) if (state.answers[k] !== null) answered++;
+  $("q-pct").textContent = Math.round(answered / TOTAL * 100) + "%";
+  $("q-bar").style.width = (answered / TOTAL * 100) + "%";
+
+  $("q-num").textContent = "QUESTION " + pad2(i + 1);
+  $("q-text").textContent = item.q;
+
+  var box = $("q-opts");
+  box.innerHTML = "";
+  var keys = ["A", "B", "C", "D"];
+  item.o.forEach(function (opt, idx) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt" + (state.answers[i] === idx ? " picked" : "");
+    btn.innerHTML = '<span class="k">' + keys[idx] + '</span><span class="t">' + escapeHTML(opt[0]) + "</span>";
+    btn.addEventListener("click", function () { choose(idx); });
+    box.appendChild(btn);
+  });
+
+  $("btn-prev").disabled = (i === 0);
+
+  var qbox = $("q-box");
+  qbox.classList.remove("anim");
+  void qbox.offsetWidth;
+  qbox.classList.add("anim");
+}
+
+var locked = false;
+function choose(optIdx) {
+  if (locked) return;
+  locked = true;
+
+  state.answers[state.index] = optIdx;
+
+  var btns = document.querySelectorAll("#q-opts .opt");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle("picked", i === optIdx);
+  }
+
+  var isLast = (state.index === TOTAL - 1);
+  var answered = 0;
+  for (var k = 0; k < state.answers.length; k++) if (state.answers[k] !== null) answered++;
+  $("q-pct").textContent = Math.round(answered / TOTAL * 100) + "%";
+  $("q-bar").style.width = (answered / TOTAL * 100) + "%";
+
+  setTimeout(function () {
+    locked = false;
+    if (isLast) { finish(); }
+    else { state.index++; renderQuiz(); }
+  }, isLast ? 460 : 230);
+}
+
+function finish() {
+  var firstEmpty = -1;
+  for (var i = 0; i < state.answers.length; i++) {
+    if (state.answers[i] === null) { firstEmpty = i; break; }
+  }
+  if (firstEmpty !== -1) {
+    state.index = firstEmpty;
+    renderQuiz();
+    toast("还有题目没有作答");
+    return;
+  }
+  renderResult();
+}
+
+/* =========================================================
+   6. 计算得分
+   ========================================================= */
+function computeResult() {
+  var raw = new Array(NDIM).fill(0);
+  state.answers.forEach(function (a, qi) {
+    if (a === null) return;
+    raw[QUESTIONS[qi].o[a][1]]++;
+  });
+
+  var scores = raw.map(function (r, i) {
+    return Math.round(100 * (r + 0.3) / (dimMax[i] + 0.3));
+  });
+
+  var order = [];
+  for (var i = 0; i < NDIM; i++) order.push(i);
+  order.sort(function (a, b) {
+    return (scores[b] - scores[a]) || (raw[b] - raw[a]);
+  });
+
+  return { raw: raw, scores: scores, order: order };
+}
+
+/* =========================================================
+   7. 雷达图（12 轴，短标签防裁切）
+   ========================================================= */
+var lastScores = null;
+var radarObserver = null;
+
+function drawRadar(scores) {
+  var canvas = $("radar");
+  if (!canvas) return;
+  var wrap = canvas.parentElement;
+  var availWidth = (wrap && wrap.clientWidth) ? wrap.clientWidth : (window.innerWidth - 80);
+  var size = Math.max(260, Math.min(availWidth, 460));
+  var dpr = window.devicePixelRatio || 1;
+
+  canvas.width = Math.round(size * dpr);
+  canvas.height = Math.round(size * dpr);
+  canvas.style.width = size + "px";
+  canvas.style.height = size + "px";
+
+  var ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, size, size);
+
+  var cx = size / 2;
+  var cy = size / 2;
+  var pad = size < 320 ? 42 : 54;
+  var R = size / 2 - pad;
+  var n = NDIM;
+  var startAngle = -Math.PI / 2;
+  var step = 2 * Math.PI / n;
+
+  function ang(i) { return startAngle + i * step; }
+  function px(i, r) { return cx + Math.cos(ang(i)) * r; }
+  function py(i, r) { return cy + Math.sin(ang(i)) * r; }
+
+  for (var lv = 1; lv <= 4; lv++) {
+    ctx.beginPath();
+    for (var i = 0; i < n; i++) {
+      var r = R * lv / 4;
+      var x = px(i, r), y = py(i, r);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = (lv === 4) ? "#cfd8e6" : "#e9eef6";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  for (var i2 = 0; i2 < n; i2++) {
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(px(i2, R), py(i2, R));
+    ctx.strokeStyle = "#e9eef6";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  for (var i3 = 0; i3 < n; i3++) {
+    var r3 = R * Math.max(scores[i3], 2) / 100;
+    var x3 = px(i3, r3), y3 = py(i3, r3);
+    if (i3 === 0) ctx.moveTo(x3, y3); else ctx.lineTo(x3, y3);
+  }
+  ctx.closePath();
+  ctx.fillStyle = "rgba(79,70,229,0.14)";
+  ctx.fill();
+  ctx.strokeStyle = "#4f46e5";
+  ctx.lineWidth = 2;
+  ctx.lineJoin = "round";
+  ctx.stroke();
+
+  for (var i4 = 0; i4 < n; i4++) {
+    var r4 = R * Math.max(scores[i4], 2) / 100;
+    ctx.beginPath();
+    ctx.arc(px(i4, r4), py(i4, r4), 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = DIMS[i4].color;
+    ctx.fill();
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  var maxScore = Math.max.apply(null, scores);
+  var fs = size < 320 ? 10.5 : 11.5;
+  ctx.font = '700 ' + fs + 'px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textBaseline = "middle";
+  var labelR = R + (size < 320 ? 18 : 24);
+
+  for (var i5 = 0; i5 < n; i5++) {
+    var lx = px(i5, labelR);
+    var ly = py(i5, labelR);
+    var cos = Math.cos(ang(i5));
+    if (Math.abs(cos) < 0.25) {
+      ctx.textAlign = "center";
+    } else if (cos > 0) {
+      ctx.textAlign = "left";
+    } else {
+      ctx.textAlign = "right";
+    }
+    var label = DIMS[i5].short;
+    var tw = ctx.measureText(label).width;
+    if (ctx.textAlign === "left" && lx + tw > size - 4) lx = size - 4 - tw;
+    if (ctx.textAlign === "right" && lx - tw < 4) lx = 4 + tw;
+
+    ctx.fillStyle = (scores[i5] === maxScore) ? DIMS[i5].color : "#5b6b82";
+    ctx.fillText(label, lx, ly);
+  }
+}
+
+function setupRadarObserver() {
+  var canvas = $("radar");
+  if (!canvas) return;
+  if (radarObserver) { try { radarObserver.disconnect(); } catch (e) {} radarObserver = null; }
+  if (typeof ResizeObserver === "undefined") return;
+  var wrap = canvas.parentElement;
+  if (!wrap) return;
+  radarObserver = new ResizeObserver(function () {
+    if (lastScores) drawRadar(lastScores);
+  });
+  try { radarObserver.observe(wrap); } catch (e) { radarObserver = null; }
+}
+
+var resizeTimer = null;
+window.addEventListener("resize", function () {
+  if (!lastScores) return;
+  if (!$("screen-result").classList.contains("active")) return;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function () { drawRadar(lastScores); }, 160);
+});
+window.addEventListener("orientationchange", function () {
+  if (!lastScores) return;
+  if (!$("screen-result").classList.contains("active")) return;
+  setTimeout(function () { drawRadar(lastScores); }, 300);
+});
+
+/* =========================================================
+   8. 结果渲染
+   ========================================================= */
+function renderResult() {
+  var res = computeResult();
+  var scores = res.scores;
+  var order = res.order;
+  lastScores = scores;
+
+  var mainIdx = order[0];
+  var subIdx = order[1];
+  var main = DIMS[mainIdx];
+  var sub = DIMS[subIdx];
+
+  var gap = scores[mainIdx] - scores[subIdx];
+  var top = scores[mainIdx];
+
+  var profileHTML = "";
+  if (top < 50) {
+    profileHTML = '你的选择比较分散，目前还没有形成明显的倾向。这不代表你没有方向，而是说明你还没真正试过。建议先挑 <b>' +
+      main.name + '</b> 用两周时间做最小成本的尝试，用行动代替想象。';
+  } else if (gap <= 5) {
+    profileHTML = '你的 <b>' + main.name + '</b> 与 <b>' + sub.name +
+      '</b> 得分非常接近，属于典型的<b>双核驱动型</b>。建议以其中一个为主线启动，另一个作为放大器，不要同时开两条战线。';
+  } else if (gap >= 15) {
+    profileHTML = '你的 <b>' + main.name + '</b> 得分明显领先，属于典型的<b>单点聚焦型</b>。方向已经很清楚了，剩下的问题不是「选哪个」，而是「什么时候开始」。';
+  } else {
+    profileHTML = '你的方向比较清晰：以 <b>' + main.name + '</b> 为主，<b>' + sub.name +
+      '</b> 为辅。这是最容易出结果的结构——主线负责启动，辅线负责放大。';
+  }
+
+  var barsHTML = "";
+  order.forEach(function (i) {
+    barsHTML += '<div class="brow">' +
+      '<span class="nm">' + DIMS[i].name + '</span>' +
+      '<span class="track"><i data-w="' + scores[i] + '" style="background:' + DIMS[i].color + '"></i></span>' +
+      '<span class="vl">' + scores[i] + '</span>' +
+      '</div>';
+  });
+
+  var mainReport = buildDimCard(main, scores[mainIdx], "主攻方向", true);
+  var subReport = buildDimCard(sub, scores[subIdx], "辅助方向", false);
+
+  var html = '' +
+    '<div class="maincard" style="background:linear-gradient(135deg,' + main.color + ',' + main.color + 'cc)">' +
+      '<div class="scorebadge">' + scores[mainIdx] + ' 分</div>' +
+      '<div class="lab">你的主攻方向</div>' +
+      '<h2>' + escapeHTML(main.name) + '</h2>' +
+      '<p>' + escapeHTML(main.tagline) + '</p>' +
+    '</div>' +
+
+    '<div class="profile">' + profileHTML + '</div>' +
+
+    '<div class="sec-title">12 方向得分总览</div>' +
+    '<div class="card">' +
+      '<div class="radar-wrap"><canvas id="radar"></canvas></div>' +
+      '<div class="bars">' + barsHTML + '</div>' +
+    '</div>' +
+
+    '<div class="sec-title">主攻方向 · 完整报告</div>' +
+    mainReport +
+
+    '<div class="sec-title">辅助方向 · 简要报告</div>' +
+    subReport +
+
+    '<div class="sec-title">主次组合策略</div>' +
+    '<div class="card">' +
+      '<p class="combo">以 <span class="hl" style="color:' + main.color + '">' + escapeHTML(main.name) +
+      '</span> 作为主线，负责启动和获客；把 <span class="hl" style="color:' + sub.color + '">' +
+      escapeHTML(sub.name) + '</span> 作为辅助，' + escapeHTML(sub.amp) + '</p>' +
+      '<div class="goal" style="margin-top:14px"><b>节奏建议：</b>第 1 个月只做主线，把动作跑通；第 2 个月开始叠加辅线；第 3 个月复盘一次——哪个方向真的带来了收入，就把资源往那边压。</div>' +
+    '</div>' +
+
+    '<div class="sec-title">通用风险提示</div>' +
+    '<div class="card">' +
+      '<ul class="dots warn">' +
+        '<li><b>时间与精力：</b>不要以透支主业、健康和家庭关系为代价，副业是加法不是替换。</li>' +
+        '<li><b>资金投入：</b>先做最小成本验证，任何要求你「先交钱囤货 / 先买课升级」的，先停下来。</li>' +
+        '<li><b>法律与合规：</b>涉及经营要了解营业执照与税务申报；涉及特定行业要确认资质要求；社群收费要远离传销与非法集资红线。</li>' +
+        '<li><b>信息安全：</b>不向任何人提供身份证照片、银行卡号、短信验证码。</li>' +
+        '<li><b>心理预期：</b>大部分副业前 3 个月收入接近于 0，这是正常的。别用「月入过万」的短视频标准衡量自己。</li>' +
+        '<li><b>家庭沟通：</b>提前说清楚你要投入的时间和预期，减少不必要的摩擦。</li>' +
+        '<li><b>防骗：</b>凡是承诺「稳赚不赔」「拉人头返利」「高回报零风险」的，一律远离。</li>' +
+      '</ul>' +
+    '</div>' +
+
+    '<div class="btn-row">' +
+      '<button class="btn ghost" id="btn-again" type="button">重新测试</button>' +
+      '<button class="btn ghost" id="btn-copy" type="button">复制文字报告</button>' +
+      '<button class="btn" id="btn-export" type="button">导出报告</button>' +
+    '</div>' +
+
+    '<div class="disc">本测试为自我探索工具，结果基于你的主观选择生成，仅用于提供思考方向，不构成任何投资、职业、法律或财务建议。所有答题数据仅存在于你当前设备的浏览器内存中，未上传、未存储、未共享。关闭或刷新页面后数据即被清空。</div>';
+
+  $("result-body").innerHTML = html;
+  show("screen-result");
+
+  requestAnimationFrame(function () {
+    drawRadar(scores);
+    setupRadarObserver();
+    var fills = document.querySelectorAll(".brow .track > i");
+    for (var i = 0; i < fills.length; i++) {
+      (function (el) {
+        var w = el.getAttribute("data-w");
+        requestAnimationFrame(function () { el.style.width = w + "%"; });
+      })(fills[i]);
+    }
+  });
+
+  $("btn-again").addEventListener("click", function () {
+    state.index = 0;
+    state.answers = new Array(TOTAL).fill(null);
+    lastScores = null;
+    if (radarObserver) { try { radarObserver.disconnect(); } catch (e) {} radarObserver = null; }
+    renderQuiz();
+    show("screen-quiz");
+  });
+
+  $("btn-copy").addEventListener("click", function () {
+    copyText(buildReportText(main, sub, scores, order));
+  });
+
+  $("btn-export").addEventListener("click", function () {
+    exportReport(main, sub, scores, order);
+  });
+}
+
+function buildDimCard(dim, score, label, isMain) {
+  var blkSkills = '<div class="blk"><h4>需要补齐的能力</h4><div class="chips">' +
+    dim.skills.map(function (x) { return '<span class="chip">' + escapeHTML(x) + '</span>'; }).join("") +
+    '</div></div>';
+
+  var blkWeek = '<div class="blk"><h4>7 天启动清单</h4><ol class="steps">' +
+    dim.week.map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+    '</ol></div>';
+
+  var blkMetrics = '<div class="blk"><h4>关键指标（只看这几个）</h4><div class="chips">' +
+    dim.metrics.map(function (x) { return '<span class="chip">' + escapeHTML(x) + '</span>'; }).join("") +
+    '</div></div>';
+
+  var blkIncome = '<div class="blk"><h4>收入预期</h4><p>' + escapeHTML(dim.income) + '</p></div>';
+
+  var blkRisks = '<div class="blk"><h4>这个方向的风险</h4><ul class="dots warn">' +
+    dim.risks.map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+    '</ul></div>';
+
+  var content = '' +
+    '<div class="blk"><h4>为什么是你</h4><p>' + escapeHTML(dim.fit) + '</p></div>' +
+
+    '<div class="blk"><h4>适合的落地形式</h4><div class="chips">' +
+      dim.forms.map(function (f) { return '<span class="chip">' + escapeHTML(f) + '</span>'; }).join("") +
+    '</div></div>' +
+
+    '<div class="blk"><h4>变现路径（从低到高）</h4><ol class="steps">' +
+      dim.ladder.map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+    '</ol></div>' +
+    blkSkills + blkWeek +
+    '<div class="goal"><b>30 天目标：</b>' + escapeHTML(dim.m30) + '</div>' +
+    blkMetrics + blkIncome + blkRisks;
+
+  if (!isMain) {
+    content = '' +
+      '<div class="blk"><h4>它能帮你什么</h4><p>' + escapeHTML(dim.amp) + '</p></div>' +
+      '<div class="blk"><h4>什么时候启动它</h4><p>不要一开始就双线作战。等主方向跑出第一笔真实收入（哪怕是 1 块钱）之后，再把 ' +
+        escapeHTML(dim.name) + ' 叠加进来。</p></div>' +
+      '<div class="blk"><h4>它的常见形式</h4><div class="chips">' +
+        dim.forms.map(function (f) { return '<span class="chip">' + escapeHTML(f) + '</span>'; }).join("") +
+      '</div></div>' +
+      '<div class="blk"><h4>它的主要风险</h4><ul class="dots warn">' +
+        dim.risks.slice(0, 3).map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+      '</ul></div>';
+  }
+
+  return '' +
+    '<div class="card rcard"' + (isMain ? ' style="margin-top:14px"' : '') + '>' +
+      '<div class="rhead">' +
+        '<span class="dot" style="background:' + dim.color + '"></span>' +
+        '<div>' +
+          '<h3>' + label + ' · ' + escapeHTML(dim.name) + '</h3>' +
+          '<div class="sub">' + escapeHTML(dim.tagline) + '</div>' +
+        '</div>' +
+        '<div class="sc">' + score + '<small>分</small></div>' +
+      '</div>' +
+      content +
+    '</div>';
+}
+
+/* =========================================================
+   9. 文字报告
+   ========================================================= */
+function buildReportText(main, sub, scores, order) {
+  var lines = [];
+  lines.push("【副业方向定位器 · 我的结果】");
+  lines.push("");
+  lines.push("主攻方向：" + main.name + "（" + scores[order[0]] + " 分）");
+  lines.push("辅助方向：" + sub.name + "（" + scores[order[1]] + " 分）");
+  lines.push("");
+  lines.push("—— 12 方向得分（从高到低）——");
+  order.forEach(function (i) {
+    lines.push("  " + DIMS[i].name + "：" + scores[i] + " 分");
+  });
+  lines.push("");
+  lines.push("—— 主攻方向定位 ——");
+  lines.push(main.tagline);
+  lines.push("");
+  lines.push("适合形式：" + main.forms.join("、"));
+  lines.push("");
+  lines.push("变现路径：");
+  main.ladder.forEach(function (x, i) { lines.push("  " + (i + 1) + ". " + x); });
+  lines.push("");
+  lines.push("7 天启动清单：");
+  main.week.forEach(function (x, i) { lines.push("  D" + (i + 1) + " " + x); });
+  lines.push("");
+  lines.push("30 天目标：" + main.m30);
+  lines.push("");
+  lines.push("关键指标：" + main.metrics.join("、"));
+  lines.push("");
+  lines.push("收入预期：" + main.income);
+  lines.push("");
+  lines.push("风险提示：");
+  main.risks.forEach(function (x) { lines.push("  · " + x); });
+  lines.push("");
+  lines.push("—— 辅助方向 ——");
+  lines.push(sub.name + "：" + sub.amp);
+  lines.push("");
+  lines.push("—— 通用风险 ——");
+  lines.push("  · 先小成本验证，不要一开始就投钱");
+  lines.push("  · 注意法律合规与税务申报");
+  lines.push("  · 前 3 个月收入接近 0 是正常的");
+  lines.push("  · 任何承诺高回报零风险的，一律远离");
+  lines.push("");
+  lines.push("（本结果由本地浏览器生成，未上传任何数据）");
+  return lines.join("\n");
+}
+
+function copyText(text) {
+  var done = function () { toast("报告已复制到剪贴板"); };
+  var fail = function () { toast("复制失败，请长按选中文字手动复制"); };
+
+  if (legacyCopy(text)) { done(); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(fail);
+    return;
+  }
+  fail();
+}
+
+function legacyCopy(text) {
+  try {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    ta.style.top = "0";
+    ta.style.fontSize = "16px";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { ta.setSelectionRange(0, text.length); } catch (e) {}
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) { return false; }
+}
+
+/* =========================================================
+   10. 导出报告（独立 HTML）
+   ========================================================= */
+var EXPORT_CSS = ''
+  + '*{box-sizing:border-box;margin:0;padding:0}'
+  + 'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;'
+  + 'background:#f4f6fb;color:#0f172a;line-height:1.7;padding:24px 16px 70px;-webkit-font-smoothing:antialiased;'
+  + 'padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}'
+  + '.wrap{max-width:760px;margin:0 auto}'
+  + '.rp-head{text-align:center;margin-bottom:22px}'
+  + '.rp-head h1{font-size:clamp(20px,5vw,24px);letter-spacing:-.4px}'
+  + '.rp-head .date{font-size:13px;color:#94a3b8;margin-top:6px}'
+  + '.maincard{border-radius:20px;padding:26px 24px;color:#fff;position:relative;overflow:hidden;'
+  + 'box-shadow:0 18px 38px -26px rgba(15,23,42,.7)}'
+  + '.maincard .lab{font-size:12.5px;letter-spacing:1.6px;opacity:.85;font-weight:700}'
+  + '.maincard h2{font-size:clamp(21px,5.5vw,28px);letter-spacing:-.5px;margin:6px 0 10px}'
+  + '.maincard p{font-size:14.5px;line-height:1.75;opacity:.96}'
+  + '.maincard .scorebadge{position:absolute;right:22px;top:22px;background:rgba(255,255,255,.2);'
+  + 'border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:6px 12px;font-size:13px;font-weight:800}'
+  + '.profile{margin-top:16px;padding:16px 18px;border-radius:14px;background:#fff;border:1px solid #e9edf5;'
+  + 'font-size:14.5px;color:#334155;line-height:1.8}'
+  + '.profile b{color:#4f46e5}'
+  + '.sec-title{font-size:13px;font-weight:800;letter-spacing:1.4px;color:#94a3b8;margin:28px 0 12px}'
+  + '.card{background:#fff;border:1px solid #e9edf5;border-radius:16px;padding:22px;margin-top:0}'
+  + '.card + .card{margin-top:14px}'
+  + '.radar-wrap{display:flex;justify-content:center;padding:6px 0 10px;width:100%;overflow:hidden}'
+  + '.radar-wrap img{width:100%;max-width:420px;height:auto;display:block}'
+  + '.bars{display:flex;flex-direction:column;gap:11px}'
+  + '.brow{display:grid;grid-template-columns:82px 1fr 42px;align-items:center;gap:11px;font-size:13.5px}'
+  + '.brow .nm{color:#475569;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'
+  + '.brow .track{height:9px;background:#eef1f8;border-radius:99px;overflow:hidden}'
+  + '.brow .track > i{display:block;height:100%;border-radius:99px}'
+  + '.brow .vl{text-align:right;font-weight:800;color:#334155}'
+  + '.rhead{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid #eef2f7;margin-bottom:16px;flex-wrap:wrap}'
+  + '.rhead .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}'
+  + '.rhead h3{font-size:clamp(16px,4vw,18px);letter-spacing:-.2px}'
+  + '.rhead .sub{font-size:13px;color:#64748b;margin-top:1px}'
+  + '.rhead .sc{margin-left:auto;font-size:20px;font-weight:800;color:#334155}'
+  + '.rhead .sc small{font-size:12px;color:#94a3b8;font-weight:600}'
+  + '.blk{margin-top:16px}'
+  + '.blk h4{font-size:13px;font-weight:800;color:#334155;letter-spacing:.4px;margin-bottom:8px;display:flex;align-items:center;gap:7px}'
+  + '.blk h4:before{content:"";width:3px;height:13px;border-radius:2px;background:#4f46e5;display:block;flex:0 0 auto}'
+  + '.blk p{font-size:14.5px;color:#475569;line-height:1.8}'
+  + '.chips{display:flex;flex-wrap:wrap;gap:7px}'
+  + '.chip{font-size:13px;color:#475569;background:#f5f7fb;border:1px solid #e9edf5;padding:5px 11px;border-radius:9px}'
+  + 'ol.steps{list-style:none;counter-reset:s}'
+  + 'ol.steps li{counter-increment:s;position:relative;padding:7px 0 7px 34px;font-size:14.5px;color:#475569;line-height:1.7}'
+  + 'ol.steps li:before{content:counter(s);position:absolute;left:0;top:9px;width:21px;height:21px;border-radius:7px;'
+  + 'background:#eef1ff;color:#4f46e5;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center}'
+  + 'ul.dots{list-style:none}'
+  + 'ul.dots li{position:relative;padding:6px 0 6px 17px;font-size:14.5px;color:#475569;line-height:1.7}'
+  + 'ul.dots li:before{content:"";position:absolute;left:0;top:15px;width:5px;height:5px;border-radius:50%;background:#cbd5e1}'
+  + 'ul.warn li:before{background:#fca5a5}'
+  + '.goal{margin-top:16px;padding:14px 16px;border-radius:13px;background:#f5f3ff;border:1px solid #e6e6fb;'
+  + 'font-size:14.5px;color:#3730a3;line-height:1.75}'
+  + '.goal b{font-weight:800}'
+  + '.combo{font-size:15px;color:#334155;line-height:1.85}'
+  + '.combo .hl{font-weight:800}'
+  + '.rp-foot{margin-top:28px;font-size:12.5px;color:#94a3b8;line-height:1.85;border-top:1px solid #e3e8f0;padding-top:18px}'
+  + '.pbtn{display:block;width:100%;margin-top:22px;padding:15px 20px;border:0;border-radius:13px;cursor:pointer;'
+  + 'font-family:inherit;font-size:15px;font-weight:700;color:#fff;background:linear-gradient(120deg,#4f46e5,#4338ca);'
+  + 'box-shadow:0 12px 24px -14px rgba(79,70,229,.95);min-height:52px;-webkit-appearance:none;appearance:none}'
+  + '@media (max-width:400px){.brow{grid-template-columns:68px 1fr 36px;gap:8px;font-size:12.5px}.card{padding:18px 16px}}'
+  + '@media print{body{background:#fff;padding:0}.pbtn{display:none}.card,.maincard{break-inside:avoid}}';
+
+function buildExportHTML(main, sub, scores, order, radarURL) {
+  var now = new Date();
+  var dateStr = now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日";
+  var mainIdx = order[0];
+  var subIdx = order[1];
+
+  var gap = scores[mainIdx] - scores[subIdx];
+  var top = scores[mainIdx];
+
+  var profileHTML = "";
+  if (top < 50) {
+    profileHTML = '你的选择比较分散，目前还没有形成明显的倾向。建议先挑 <b>' + main.name +
+      '</b> 用两周时间做最小成本的尝试，用行动代替想象。';
+  } else if (gap <= 5) {
+    profileHTML = '你的 <b>' + main.name + '</b> 与 <b>' + sub.name +
+      '</b> 得分非常接近，属于典型的<b>双核驱动型</b>。建议以其中一个为主线启动，另一个作为放大器。';
+  } else if (gap >= 15) {
+    profileHTML = '你的 <b>' + main.name + '</b> 得分明显领先，属于典型的<b>单点聚焦型</b>。方向已经很清楚了。';
+  } else {
+    profileHTML = '你的方向比较清晰：以 <b>' + main.name + '</b> 为主，<b>' + sub.name +
+      '</b> 为辅。主线负责启动，辅线负责放大。';
+  }
+
+  var barsHTML = "";
+  order.forEach(function (i) {
+    barsHTML += '<div class="brow">' +
+      '<span class="nm">' + DIMS[i].name + '</span>' +
+      '<span class="track"><i style="width:' + scores[i] + '%;background:' + DIMS[i].color + '"></i></span>' +
+      '<span class="vl">' + scores[i] + '</span>' +
+      '</div>';
+  });
+
+  var radarHTML = radarURL
+    ? '<div class="radar-wrap"><img src="' + radarURL + '" alt="方向得分雷达图" /></div>'
+    : '';
+
+  function dimCardHTML(dim, score, label, isMain) {
+    var body = '';
+    if (isMain) {
+      body = '<div class="blk"><h4>为什么是你</h4><p>' + escapeHTML(dim.fit) + '</p></div>' +
+        '<div class="blk"><h4>适合的落地形式</h4><div class="chips">' +
+          dim.forms.map(function (f) { return '<span class="chip">' + escapeHTML(f) + '</span>'; }).join("") +
+        '</div></div>' +
+        '<div class="blk"><h4>变现路径（从低到高）</h4><ol class="steps">' +
+          dim.ladder.map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+        '</ol></div>' +
+        '<div class="blk"><h4>需要补齐的能力</h4><div class="chips">' +
+          dim.skills.map(function (x) { return '<span class="chip">' + escapeHTML(x) + '</span>'; }).join("") +
+        '</div></div>' +
+        '<div class="blk"><h4>7 天启动清单</h4><ol class="steps">' +
+          dim.week.map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+        '</ol></div>' +
+        '<div class="goal"><b>30 天目标：</b>' + escapeHTML(dim.m30) + '</div>' +
+        '<div class="blk"><h4>关键指标</h4><div class="chips">' +
+          dim.metrics.map(function (x) { return '<span class="chip">' + escapeHTML(x) + '</span>'; }).join("") +
+        '</div></div>' +
+        '<div class="blk"><h4>收入预期</h4><p>' + escapeHTML(dim.income) + '</p></div>' +
+        '<div class="blk"><h4>这个方向的风险</h4><ul class="dots warn">' +
+          dim.risks.map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+        '</ul></div>';
+    } else {
+      body = '<div class="blk"><h4>它能帮你什么</h4><p>' + escapeHTML(dim.amp) + '</p></div>' +
+        '<div class="blk"><h4>什么时候启动它</h4><p>等主方向跑出第一笔真实收入之后，再把 ' +
+          escapeHTML(dim.name) + ' 叠加进来。</p></div>' +
+        '<div class="blk"><h4>它的常见形式</h4><div class="chips">' +
+          dim.forms.map(function (f) { return '<span class="chip">' + escapeHTML(f) + '</span>'; }).join("") +
+        '</div></div>' +
+        '<div class="blk"><h4>它的主要风险</h4><ul class="dots warn">' +
+          dim.risks.slice(0, 3).map(function (x) { return '<li>' + escapeHTML(x) + '</li>'; }).join("") +
+        '</ul></div>';
+    }
+
+    return '<div class="card">' +
+      '<div class="rhead">' +
+        '<span class="dot" style="background:' + dim.color + '"></span>' +
+        '<div><h3>' + label + ' · ' + escapeHTML(dim.name) + '</h3>' +
+        '<div class="sub">' + escapeHTML(dim.tagline) + '</div></div>' +
+        '<div class="sc">' + score + '<small>分</small></div>' +
+      '</div>' + body + '</div>';
+  }
+
+  var p = [];
+  p.push('<!DOCTYPE html>');
+  p.push('<html lang="zh-CN">');
+  p.push('<head>');
+  p.push('<meta charset="UTF-8" />');
+  p.push('<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />');
+  p.push('<meta name="robots" content="noindex" />');
+  p.push('<title>副业方向定位报告 · ' + escapeHTML(main.name) + '</title>');
+  p.push('<style>' + EXPORT_CSS + '</style>');
+  p.push('</head>');
+  p.push('<body>');
+  p.push('<div class="wrap">');
+
+  p.push('<div class="rp-head">');
+  p.push('<h1>副业方向定位报告</h1>');
+  p.push('<div class="date">生成时间：' + dateStr + '</div>');
+  p.push('</div>');
+
+  p.push('<div class="maincard" style="background:linear-gradient(135deg,' + main.color + ',' + main.color + 'cc)">');
+  p.push('<div class="scorebadge">' + scores[mainIdx] + ' 分</div>');
+  p.push('<div class="lab">你的主攻方向</div>');
+  p.push('<h2>' + escapeHTML(main.name) + '</h2>');
+  p.push('<p>' + escapeHTML(main.tagline) + '</p>');
+  p.push('</div>');
+
+  p.push('<div class="profile">' + profileHTML + '</div>');
+
+  p.push('<div class="sec-title">12 方向得分总览</div>');
+  p.push('<div class="card">' + radarHTML + '<div class="bars">' + barsHTML + '</div></div>');
+
+  p.push('<div class="sec-title">主攻方向 · 完整报告</div>');
+  p.push(dimCardHTML(main, scores[mainIdx], "主攻方向", true));
+
+  p.push('<div class="sec-title">辅助方向 · 简要报告</div>');
+  p.push(dimCardHTML(sub, scores[subIdx], "辅助方向", false));
+
+  p.push('<div class="sec-title">主次组合策略</div>');
+  p.push('<div class="card">');
+  p.push('<p class="combo">以 <span class="hl" style="color:' + main.color + '">' + escapeHTML(main.name) +
+    '</span> 作为主线，负责启动和获客；把 <span class="hl" style="color:' + sub.color + '">' +
+    escapeHTML(sub.name) + '</span> 作为辅助，' + escapeHTML(sub.amp) + '</p>');
+  p.push('<div class="goal" style="margin-top:14px"><b>节奏建议：</b>第 1 个月只做主线，把动作跑通；第 2 个月开始叠加辅线；第 3 个月复盘一次——哪个方向真的带来了收入，就把资源往那边压。</div>');
+  p.push('</div>');
+
+  p.push('<div class="sec-title">通用风险提示</div>');
+  p.push('<div class="card"><ul class="dots warn">');
+  p.push('<li><b>时间与精力：</b>不要以透支主业、健康和家庭关系为代价，副业是加法不是替换。</li>');
+  p.push('<li><b>资金投入：</b>先做最小成本验证，任何要求你「先交钱囤货 / 先买课升级」的，先停下来。</li>');
+  p.push('<li><b>法律与合规：</b>涉及经营要了解营业执照与税务申报；涉及特定行业要确认资质要求；社群收费要远离传销与非法集资红线。</li>');
+  p.push('<li><b>信息安全：</b>不向任何人提供身份证照片、银行卡号、短信验证码。</li>');
+  p.push('<li><b>心理预期：</b>大部分副业前 3 个月收入接近于 0，这是正常的。</li>');
+  p.push('<li><b>家庭沟通：</b>提前说清楚你要投入的时间和预期，减少不必要的摩擦。</li>');
+  p.push('<li><b>防骗：</b>凡是承诺「稳赚不赔」「拉人头返利」「高回报零风险」的，一律远离。</li>');
+  p.push('</ul></div>');
+
+  p.push('<button class="pbtn" type="button" onclick="window.print()">打印 / 保存为 PDF</button>');
+
+  p.push('<div class="rp-foot">');
+  p.push('本报告为自我探索工具，结果基于你的主观选择生成，仅用于提供思考方向，不构成任何投资、职业、法律或财务建议。<br />');
+  p.push('报告由「副业方向定位器」在本地浏览器生成，未上传任何答题数据。');
+  p.push('</div>');
+
+  p.push('</div>');
+  p.push('</body>');
+  p.push('</html>');
+
+  return p.join("");
+}
+
+var wechatReportText = "";
+function showWeChatTip(reportText) {
+  wechatReportText = reportText;
+  $("wxtip").classList.add("on");
+}
+function hideWeChatTip() { $("wxtip").classList.remove("on"); }
+
+$("wxtip-close").addEventListener("click", hideWeChatTip);
+$("wxtip-copy").addEventListener("click", function () { copyText(wechatReportText); });
+$("wxtip").addEventListener("click", function (e) {
+  if (e.target === $("wxtip")) hideWeChatTip();
+});
+
+function exportReport(main, sub, scores, order) {
+  if (isWeChat()) {
+    showWeChatTip(buildReportText(main, sub, scores, order));
+    return;
+  }
+
+  var canvas = $("radar");
+  var radarURL = "";
+  if (canvas) {
+    try { radarURL = canvas.toDataURL("image/png"); } catch (e) { radarURL = ""; }
+  }
+
+  var html = buildExportHTML(main, sub, scores, order, radarURL);
+
+  var d = new Date();
+  var stamp = "" + d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate());
+  var filename = "副业方向定位报告-" + main.name + "-" + stamp + ".html";
+
+  if (isIOS()) {
+    try {
+      var w = window.open("", "_blank");
+      if (w && w.document) {
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+        toast("报告已在新窗口打开，可点分享保存");
+        return;
+      }
+    } catch (e) { /* 继续走 Blob */ }
+  }
+
+  try {
+    var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.rel = "noopener";
+    a.style.display = "none";
+    document.body.appendChild(a);
+
+    if (typeof a.download === "undefined" && isAndroid()) {
+      document.body.removeChild(a);
+      var w2 = window.open(url, "_blank");
+      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+      if (w2) toast("报告已打开，请用浏览器菜单保存");
+      else toast("请允许弹出窗口后重试");
+      return;
+    }
+
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 8000);
+    toast("报告已导出，可用浏览器打开");
+  } catch (e) {
+    showWeChatTip(buildReportText(main, sub, scores, order));
+  }
+}
+
+/* =========================================================
+   11. 启动 & 快捷键
+   ========================================================= */
+$("btn-start").addEventListener("click", function () {
+  state.index = 0;
+  state.answers = new Array(TOTAL).fill(null);
+  lastScores = null;
+  if (radarObserver) { try { radarObserver.disconnect(); } catch (e) {} radarObserver = null; }
+  renderQuiz();
+  show("screen-quiz");
+});
+
+$("btn-prev").addEventListener("click", function () {
+  if (state.index > 0) { state.index--; renderQuiz(); }
+});
+
+document.addEventListener("keydown", function (e) {
+  if (!$("screen-quiz").classList.contains("active")) return;
+  if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+
+  var n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 4) {
+    if (locked) return;
+    var opts = document.querySelectorAll("#q-opts .opt");
+    if (opts[n - 1]) { e.preventDefault(); opts[n - 1].click(); }
+    return;
+  }
+  if (e.key === "Backspace" || e.key === "ArrowLeft") {
+    if (state.index > 0 && !locked) {
+      e.preventDefault();
+      state.index--;
+      renderQuiz();
+    }
+  }
+});
+
+renderQuiz();
+show("screen-start");
+</script>
+</body>
+</html>
